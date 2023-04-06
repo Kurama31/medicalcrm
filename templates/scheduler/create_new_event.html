@@ -1,0 +1,62 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Запись на приём{% endblock %}
+
+{% block content %}
+    <div class="features">
+        <h1>Формуляр записи на приём</h1>
+
+<!--/TEST-->
+        SESSION here:   {{ request.session.items }}<br>
+
+<!--    action - можно добавить адрес формы обратки вводимых данных (что б обр на другой старнице)    -->
+        <form method="post" >
+            {% csrf_token %}
+            {{ form.status }}<br>
+            {{ form.date_begin }}<br>
+            {{ form.date_end }}<br>
+            {{ form.comment }}<br>
+            {{ form.client_name }}<br>
+            {{ form.client_lastname }}<br>
+            {{ form.staff_name }}<br>
+            {{ form.staff_lastname }}<br>
+            {{ form.cabinet_number }}<br>
+<!--      если error то этот блок мы видеть не будем-->
+            <span>{{ error }}</span>
+<!-- <br> - переход на новую строку-->
+
+            <button class="btn btn-success" type="imput">Добавить запись</button><br>
+        </form>
+    </div>
+{% endblock %}
+<!--<input type="datetime-local" id="localdate" name="date"/>-->
+<!--
+ csrf_token делает возможным отправку с странички
+            {% csrf_token %}
+            {{ form.status }}<br>
+            {{ form.date_begin }}<br>
+            {{ form.date_end }}<br>
+            {{ form.comment }}<br>
+            {{ form.client_name }}<br>
+            {{ form.client_lastname }}<br>
+            {{ form.doctor_name }}<br>
+            {{ form.doctor_lastname }}<br>
+            {{ form.cabinet_number }}<br>
+      если error то этот блок мы видеть не будем
+            <span>{{ error }}</span>
+ <br> - переход на новую строку
+
+            <button class="btn btn-success" type="imput">Добавить статью</button><br>
+-->
+
+<!--TEST-->
+<!-- Вот он, работабщий датапикер (только дата)      -->
+<!--        <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+        <script>
+        $(document).ready(function() {
+            $('.datepicker').datepicker();
+        });
+        </script>-->
+<!--/TEST-->

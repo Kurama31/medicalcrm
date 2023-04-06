@@ -1,0 +1,124 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'main/js/Java.js' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+
+
+
+
+</head>
+<body>
+    <aside>
+        <img src="{% static 'main/img/test1.jpg' %}" alt="Лого">
+        <span class="logo">Kurama</span>
+        <h3>Навигация</h3>
+        <ul>
+            <a href="/"><li><i class="fas fa-home"></i> Главная</li></a>
+            <a href="/about_us"><li><i class="fab fa-artstation"></i> Про нас</li></a>
+            <a href=""><li><i class="fab fa-battle-net"></i> Контакты</li></a>
+            <a href="/news"><li><i class="fab fa-battle-net"></i> News</li></a>
+            <a href="/news/Auth"><li><i class="fab fa-battle-net"></i> Auth </li></a>
+            <a href="/admin"><li><i class="fab fa-battle-net"></i> Admin</li></a>
+            {# href ссылка, li - элемент списка #}
+            <a href="{% url 'create' %}"><li><i class="fa-thin fa-archway"></i> Добавление текста </li></a>
+            <a href="{% url 'scheduler_today' %}"><li><i class="fa-light fa-avocado"></i> Календарь </li></a>
+            <a href="{% url 'task_manager' %}"><li><i class="fa-light fa-avocado"></i>&#9719; Task Manager </li></a>
+            <a href="{% url 'make_work_schedule' %}"><li><i class="fa-light fa-avocado"></i> Заполнить расписание </li></a>
+
+        </ul>
+    </aside>
+    <div class = "container">
+        <div class="top-bar">
+            <selection>
+                {% if username %}
+                    <a href="/auth/logout/">Выйти ({{username}})</a>
+                {% else %}
+                    <a href="#Login">Войти</a>
+                {% endif %}
+            </selection>
+        </div>
+    <div class = "content">
+        {% block login %}{% endblock %}
+        {% block test %}{% endblock %}
+        {% block content %}{% endblock %}
+
+    </div>
+
+
+</div>
+
+<!-- log in Высплывающее окно регистрации -->
+
+    <div id="Login" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Внедрение в анал</h3>
+                <a href="#close" title="Close" class="close">×</a>
+            </div>
+            <div class="modal-body">
+                <!--поля авторизации -->
+                <form action="/auth/login/" method="post">
+                    {% csrf_token %}
+                    <table>
+                        <tr>
+                            <td>Имя пользователя:</td>
+                            <td>
+                                <div class="login">
+                                    <input type="text" name="username" id="login-input">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Пароль: </td>
+                            <td>
+
+                                <div class="password">
+                                    <input type="password" name="password" id="password-input">
+<!--                                    <input type="password" id="password-input" placeholder="Введите пароль" name="password" value="FakePSW">-->
+                                    <a href="#" class="eye" onclick="return show_hide_password(this);"></a>
+                                </div>
+
+                            </td>
+                        </tr>
+                    </table>
+                    {% if login_error %}
+                        <label class="error">{{ login_error }}</label><br>
+                    {% endif %}
+
+                <!--  Крассивая копка входа   -->
+                    <button type="submit" class="submit">
+                        Войти
+                    </button><br>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    </div>
+<!-- ========================= -->
+<script>
+    function show_hide_password(target){
+        var input = document.getElementById('password-input');
+        if (input.getAttribute('type') == 'password') {
+            target.classList.add('view');
+            input.setAttribute('type', 'text');
+        } else {
+            target.classList.remove('view');
+            input.setAttribute('type', 'password');
+        }
+        return false;
+    }
+</script>
+
+
+</body>
+</html>

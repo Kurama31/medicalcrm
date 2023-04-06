@@ -1,0 +1,42 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Календарь{% endblock %}
+
+{% block content %}
+
+=====================================<br>
+<!--<td class="btn-group"> Ячейка-->
+<!-- <tr>  Новая строка -->
+<!-- <th> Заголовок -->
++++++++++++++++++++++++<br>
+{% for select_event in form %}
+    {{ select_event.staff_lastname|stringformat:"s"}}<br>
+{% endfor %}
+-----------------------<br>
+<table>
+    <tr>
+        <th> Время </th>
+        <th>==={{ staff_list.0 }}</th>
+        <th>==={{ staff_list.1 }}</th>
+    </tr>
+=============================================================================
+    <tr>
+    <th>09.00 - 10.00</th>
+
+    <th>10.00 - 11.00</th>
+    </tr>
+
+
+
+
+</table>
+
+============================================<br>
+
+
+{% for select_event in staff_list %}
+    {{select_event}}
+{% endfor %}
+
+
+{% endblock %}

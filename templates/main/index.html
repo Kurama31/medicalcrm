@@ -1,0 +1,19 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<!--Тут мы создаём класс features и в цсс к нему обращаемся-->
+    <div class="features">
+        <h1>{{ title|upper }}</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur consequatur cumque dolore in necessitatibus neque nisi, officiis provident saepe sapiente sed soluta ut. Architecto ipsum iure temporibus veritatis. Dolores, totam.</p>
+        <button> index.html </button>
+
+        {% for el in values %}
+
+            <p>{{ el }}</p>
+        {% endfor %}
+
+        {{ obj }}
+    </div>
+{% endblock %}

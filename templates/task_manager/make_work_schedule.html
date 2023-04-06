@@ -1,0 +1,904 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Диспетчер задач{% endblock %}
+
+
+{% block test %}
+<!-- if username - права доступа к данным -->
+{% if username %}
+<!--==============================================================-->
+
+(дата=0) = red, Рабочий день = green, Не рабочий день = blue<br>
+<form method="get" >
+    <input name="selected_month" type="month" value={{slected_period}}><br>
+    <button class="btn btn-success" type="submit"> запись</button>
+
+</form>
+========================================================
+<form method="post" >
+    {% csrf_token %}
+    <div class="block_table">
+        <ul class="table">
+            <li class="table_title">Понедельник</li>
+<!--================== 0 column 0 row ====================================-->
+                {% if calendar.0.0.0|slice:"-8:10" == "0" %}
+                    <li class="row"></li>
+                {% else %}
+                    <li id="f00" class="row" style="background: {{select_color.0.0}}" onclick="first('f00', 's00', 'd00', 'v00')">{{calendar.0.0.0|slice:"-8:10"}}</li>
+                {% endif %}
+                <li id="s00"; class="hide_the_time" style="display:none" onclick="first_yelloy('f00', 's00', 'd00', 'v00')">{{calendar.0.0.0|slice:"-8:10"}}</li>
+                <div id="d00" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.0.0.date_begin}}
+                           min={{calendar.1.0.0}} max={{calendar.1.0.0}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.0.0.date_end}}
+                           min={{calendar.2.0.0}} max={{calendar.2.0.0}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v00"  name="status" value={{current_month_list.0.0.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+
+                </div>
+
+<!--================== 0 column 1 row ====================================-->
+
+                <li id="f10" class="row" style="background: {{select_color.1.0}}" onclick="first('f10', 's10', 'd10', 'v10')">{{calendar.0.1.0|slice:"-8:10"}}</li>
+                <li id="s10"; class="hide_the_time" style="display:none" onclick="first_yelloy('f10', 's10', 'd10', 'v10')">{{calendar.0.1.0|slice:"-8:10"}}</li>
+
+                <div id="d10" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.1.0.date_begin}}
+                           min={{calendar.1.1.0}} max={{calendar.2.1.0}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.1.0.date_end}}
+                           min={{calendar.1.1.0}} max={{calendar.2.1.0}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v10"  name="status" value={{current_month_list.1.0.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 0 column 2 row ====================================-->
+                <li id="f20" class="row" style="background: {{select_color.2.0}}" onclick="first('f20', 's20', 'd20', 'v20')">{{calendar.0.2.0|slice:"-8:10"}}</li>
+                <li id="s20"; class="hide_the_time" style="display:none" onclick="first_yelloy('f20', 's20', 'd20', 'v20')">{{calendar.0.2.0|slice:"-8:10"}}</li>
+
+                <div id="d20" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.2.0.date_begin}}
+                           min={{calendar.1.2.0}} max={{calendar.2.2.0}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.2.0.date_end}}
+                           min={{calendar.1.2.0}} max={{calendar.2.2.0}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v20"  name="status" value={{current_month_list.2.0.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+
+                </div>
+
+<!--================== 0 column 3 row ====================================-->
+                <li id="f30" class="row" style="background: {{select_color.3.0}}" onclick="first('f30', 's30', 'd30', 'v30')">{{calendar.0.3.0|slice:"-8:10"}}</li>
+                <li id="s30"; class="hide_the_time" style="display:none" onclick="first_yelloy('f30', 's30', 'd30', 'v30')">{{calendar.0.3.0|slice:"-8:10"}}</li>
+
+                <div id="d30" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.3.0.date_begin}}
+                           min={{calendar.1.3.0}} max={{calendar.2.3.0}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.3.0.date_end}}
+                           min={{calendar.1.3.0}} max={{calendar.2.3.0}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v30"  name="status" value={{current_month_list.3.0.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+
+                </div>
+
+<!--================== 0 column 4 row ====================================-->
+                {% if calendar.0.4.0|slice:"-8:10" == "0" %}
+                    <li class="row"></li>
+                {% else %}
+                    <li id="f40" class="row" style="background: {{select_color.4.0}}" onclick="first('f40', 's40', 'd40', 'v40')">{{calendar.0.4.0|slice:"-8:10"}}</li>
+                {% endif %}
+                <li id="s40"; class="hide_the_time" style="display:none" onclick="first_yelloy('f40', 's40', 'd40', 'v40')">{{calendar.0.4.0|slice:"-8:10"}}</li>
+
+                <div id="d40" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.4.0.date_begin}}
+                           min={{calendar.1.4.0}} max={{calendar.2.4.0}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.4.0.date_end}}
+                           min={{calendar.1.4.0}} max={{calendar.2.4.0}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v40"  name="status" value={{current_month_list.4.0.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 0 column 5 row 5.0 ====================================-->
+                {% if calendar.0.5.0|slice:"-8:10" == "0" or calendar.0.5.6|slice:"-8:10" == NULL %}
+                    <li class="row"></li>
+                {% else %}
+                    <li id="f50" class="row" style="background: {{select_color.5.0}}" onclick="first('f50', 's50', 'd50', 'v50')">{{calendar.0.5.0|slice:"-8:10"}}</li>
+                {% endif %}
+                <li id="s50"; class="hide_the_time" style="display:none" onclick="first_yelloy('f50', 's50', 'd50', 'v50')">{{calendar.0.5.0|slice:"-8:10"}}</li>
+
+                <div id="d50" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.5.0.date_begin}}
+                           min={{calendar.1.5.0}} max={{calendar.2.5.0}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.5.0.date_end}}
+                           min={{calendar.1.5.0}} max={{calendar.2.5.0}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+<!--                    <input type="hidden" id="v50"  name="status" value="0">-->
+                    <input type="hidden" id="v50"  name="status" value={{current_month_list.5.0.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+        </ul>
+<!--================== 1 column ====================================-->
+        <ul class="table">
+            <li class="table_title">Вторник</li>
+
+<!--================== 1 column 0 row 0.1 ====================================-->
+                {% if calendar.0.0.1|slice:"-8:10" == "0" %}
+                    <li class="row"></li>
+                {% else %}
+                    <li id="f01" class="row" style="background: {{select_color.0.1}}" onclick="first('f01', 's01', 'd01', 'v01')">{{calendar.0.0.1|slice:"-8:10"}}</li>
+                {% endif %}
+
+                <li id="s01"; class="hide_the_time" style="display:none" onclick="first_yelloy('f01', 's01', 'd01', 'v01')">{{calendar.0.0.1|slice:"-8:10"}}</li>
+
+                <div id="d01" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.0.1.date_begin}}
+                           min={{calendar.1.0.1}} max={{calendar.2.0.1}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.0.1.date_end}}
+                           min={{calendar.1.0.1}} max={{calendar.2.0.1}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v01"  name="status" value={{current_month_list.0.1.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+
+                </div>
+
+<!--================== 1 column 1 row 1.1 ====================================-->
+                <li id="f11" class="row" style="background: {{select_color.1.1}}" onclick="first('f11', 's11', 'd11', 'v11')">{{calendar.0.1.1|slice:"-8:10"}}</li>
+                <li id="s11"; class="hide_the_time" style="display:none" onclick="first_yelloy('f11', 's11', 'd11', 'v11')">{{calendar.0.1.1|slice:"-8:10"}}</li>
+
+                <div id="d11" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.1.1.date_begin}}
+                           min={{calendar.1.1.1}} max={{calendar.2.1.1}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.1.1.date_end}}
+                           min={{calendar.1.1.1}} max={{calendar.2.1.1}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v11"  name="status" value={{current_month_list.1.1.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 1 column 2 row 2.1 ====================================-->
+                <li id="f21" class="row" style="background: {{select_color.2.1}}" onclick="first('f21', 's21', 'd21', 'v21')">{{calendar.0.2.1|slice:"-8:10"}}</li>
+                <li id="s21"; class="hide_the_time" style="display:none" onclick="first_yelloy('f21', 's21', 'd21', 'v21')">{{calendar.0.2.1|slice:"-8:10"}}</li>
+
+                <div id="d21" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.2.1.date_begin}}
+                           min={{calendar.1.2.1}} max={{calendar.2.2.1}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.2.1.date_end}}
+                           min={{calendar.1.2.1}} max={{calendar.2.2.1}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v21"  name="status" value={{current_month_list.2.1.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 1 column 3 row 3.1 ====================================-->
+                <li id="f31" class="row" style="background: {{select_color.3.1}}" onclick="first('f31', 's31', 'd31', 'v31')">{{calendar.0.3.1|slice:"-8:10"}}</li>
+                <li id="s31"; class="hide_the_time" style="display:none" onclick="first_yelloy('f31', 's31', 'd31', 'v31')">{{calendar.0.3.1|slice:"-8:10"}}</li>
+
+                <div id="d31" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.3.1.date_begin}}
+                           min={{calendar.1.3.1}} max={{calendar.2.3.1}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.3.1.date_end}}
+                           min={{calendar.1.3.1}} max={{calendar.2.3.1}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v31"  name="status" value={{current_month_list.3.1.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 1 column 4 row 4.1 ====================================-->
+                {% if calendar.0.4.1|slice:"-8:10" == "0" %}
+                    <li class="row"></li>
+                {% else %}
+                    <li id="f41" class="row" style="background: {{select_color.4.1}}" onclick="first('f41', 's41', 'd41', 'v41')">{{calendar.0.4.1|slice:"-8:10"}}</li>
+                {% endif %}
+
+                <li id="s41"; class="hide_the_time" style="display:none" onclick="first_yelloy('f41', 's41', 'd41', 'v41')">{{calendar.0.4.1|slice:"-8:10"}}</li>
+
+                <div id="d41" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.4.1.date_begin}}
+                           min={{calendar.1.4.1}} max={{calendar.2.4.1}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.4.1.date_end}}
+                           min={{calendar.1.4.1}} max={{calendar.2.4.1}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v41"  name="status" value={{current_month_list.4.1.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 1 column 5 row 5.1 ====================================-->
+                {% if calendar.0.5.1|slice:"-8:10" == "0" or calendar.0.5.6|slice:"-8:10" == NULL %}
+                    <li class="row"></li>
+                {% else %}
+                    <li id="f51" class="row" style="background: {{select_color.5.1}}" onclick="first('f51', 's51', 'd51', 'v51')">{{calendar.0.5.1|slice:"-8:10"}}</li>
+                {% endif %}
+                <li id="s51"; class="hide_the_time" style="display:none" onclick="first_yelloy('f51', 's51', 'd51', 'v51')">{{calendar.0.5.1|slice:"-8:10"}}</li>
+
+                <div id="d51" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.5.1.date_begin}}
+                           min={{calendar.1.5.1}} max={{calendar.2.5.1}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.5.1.date_end}}
+                           min={{calendar.1.5.1}} max={{calendar.2.5.1}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v51"  name="status" value={{current_month_list.5.1.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+        </ul>
+        <ul class="table">
+
+<!--================== 2 column ====================================-->
+            <li class="table_title">Среда</li>
+<!--================== 0 row, 2 column 0.2 ====================================-->
+                {% if calendar.0.0.2|slice:"-8:10" == "0" %}
+                    <li class="row"></li>
+                {% else %}
+                    <li id="f02" class="row" style="background: {{select_color.0.2}}" onclick="first('f02', 's02', 'd02', 'v02')">{{calendar.0.0.2|slice:"-8:10"}}</li>
+                {% endif %}
+                <li id="s02"; class="hide_the_time" style="display:none" onclick="first_yelloy('f02', 's02', 'd02', 'v02')">{{calendar.0.0.2|slice:"-8:10"}}</li>
+
+                <div id="d02" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.0.2.date_begin}}
+                           min={{calendar.1.0.2}} max={{calendar.2.0.2}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.0.2.date_end}}
+                           min={{calendar.1.0.2}} max={{calendar.2.0.2}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v02"  name="status" value={{current_month_list.0.2.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 1 row, 2 column 1.2 ====================================-->
+                <li id="f12" class="row" style="background: {{select_color.1.2}}" onclick="first('f12', 's12', 'd12', 'v12')">{{calendar.0.1.2|slice:"-8:10"}}</li>
+                <li id="s12"; class="hide_the_time" style="display:none" onclick="first_yelloy('f12', 's12', 'd12', 'v12')">{{calendar.0.1.2|slice:"-8:10"}}</li>
+
+                <div id="d12" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.1.2.date_begin}}
+                           min={{calendar.1.1.2}} max={{calendar.2.1.2}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.1.2.date_end}}
+                           min={{calendar.1.1.2}} max={{calendar.2.1.2}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v12"  name="status" value={{current_month_list.1.2.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 2 row, 2 column 2.2 ====================================-->
+                <li id="f22" class="row" style="background: {{select_color.2.2}}" onclick="first('f22', 's22', 'd22', 'v22')">{{calendar.0.2.2|slice:"-8:10"}}</li>
+                <li id="s22"; class="hide_the_time" style="display:none" onclick="first_yelloy('f22', 's22', 'd22', 'v22')">{{calendar.0.2.2|slice:"-8:10"}}</li>
+
+                <div id="d22" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.2.2.date_begin}}
+                           min={{calendar.1.2.2}} max={{calendar.2.2.2}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.2.2.date_end}}
+                           min={{calendar.1.2.2}} max={{calendar.2.2.2}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v22"  name="status" value={{current_month_list.2.2.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 3 row, 2 column 2.3 ====================================-->
+                <li id="f32" class="row" style="background: {{select_color.3.2}}" onclick="first('f32', 's32', 'd32', 'v32')">{{calendar.0.3.2|slice:"-8:10"}}</li>
+                <li id="s32"; class="hide_the_time" style="display:none" onclick="first_yelloy('f32', 's32', 'd32', 'v32')">{{calendar.0.3.2|slice:"-8:10"}}</li>
+
+                <div id="d32" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.3.2.date_begin}}
+                           min={{calendar.1.3.2}} max={{calendar.2.3.2}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.3.2.date_end}}
+                           min={{calendar.1.3.2}} max={{calendar.2.3.2}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v32"  name="status" value={{current_month_list.3.2.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 4 row, 2 column 4.2 ====================================-->
+                {% if calendar.0.4.2|slice:"-8:10" == "0" %}
+                    <li class="row"></li>
+                {% else %}
+                    <li id="f42" class="row" style="background: {{select_color.4.2}}" onclick="first('f42', 's42', 'd42', 'v42')">{{calendar.0.4.2|slice:"-8:10"}}</li>
+                {% endif %}
+
+                <li id="s42"; class="hide_the_time" style="display:none" onclick="first_yelloy('f42', 's42', 'd42', 'v42')">{{calendar.0.4.2|slice:"-8:10"}}</li>
+
+                <div id="d42" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.4.2.date_begin}}
+                           min={{calendar.1.4.2}} max={{calendar.2.4.2}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.4.2.date_end}}
+                           min={{calendar.1.4.2}} max={{calendar.2.4.2}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v42"  name="status" value={{current_month_list.4.2.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 4 row, 2 column 5.2 ====================================-->
+                {% if calendar.0.5.2|slice:"-8:10" == "0" or calendar.0.5.6|slice:"-8:10" == NULL %}
+                    <li class="row"></li>
+                {% else %}
+                    <li id="f52" class="row" style="background: {{select_color.5.2}}" onclick="first('f52', 's52', 'd52', 'v52')">{{calendar.0.5.2|slice:"-8:10"}}</li>
+                {% endif %}
+                <li id="s52"; class="hide_the_time" style="display:none" onclick="first_yelloy('f52', 's52', 'd52', 'v52')">{{calendar.0.5.2|slice:"-8:10"}}</li>
+
+                <div id="d52" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.5.2.date_begin}}
+                           min={{calendar.1.5.2}} max={{calendar.2.5.2}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.5.2.date_end}}
+                           min={{calendar.1.5.2}} max={{calendar.2.5.2}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v52"  name="status" value={{current_month_list.5.2.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+        </ul>
+        <ul class="table">
+
+<!--================== 3 column ====================================-->
+            <li class="table_title">Четверг</li>
+<!--================== 0 row, 3 column 0.3 ====================================-->
+                {% if calendar.0.0.3|slice:"-8:10" == "0" %}
+                    <li class="row"></li>
+                {% else %}
+                    <li id="f03" class="row" style="background: {{select_color.0.3}}" onclick="first('f03', 's03', 'd03', 'v03')">{{calendar.0.0.3|slice:"-8:10"}}</li>
+                {% endif %}
+                <li id="s03"; class="hide_the_time" style="display:none" onclick="first_yelloy('f03', 's03', 'd03', 'v03')">{{calendar.0.0.3|slice:"-8:10"}}</li>
+
+                <div id="d03" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.0.3.date_begin}}
+                           min={{calendar.1.0.3}} max={{calendar.2.0.3}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.0.3.date_end}}
+                           min={{calendar.1.0.3}} max={{calendar.2.0.3}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v03"  name="status" value={{current_month_list.0.3.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 1 row, 3 column 1.3 ====================================-->
+                <li id="f13" class="row" style="background: {{select_color.1.3}}" onclick="first('f13', 's13', 'd13', 'v13')">{{calendar.0.1.3|slice:"-8:10"}}</li>
+                <li id="s13"; class="hide_the_time" style="display:none" onclick="first_yelloy('f13', 's13', 'd13', 'v13')">{{calendar.0.1.3|slice:"-8:10"}}</li>
+
+                <div id="d13" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.1.3.date_begin}}
+                           min={{calendar.1.1.3}} max={{calendar.2.1.3}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.1.3.date_end}}
+                           min={{calendar.1.1.3}} max={{calendar.2.1.3}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v13"  name="status" value={{current_month_list.1.3.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 2 row, 3 column 2.3 ====================================-->
+                <li id="f23" class="row" style="background: {{select_color.2.3}}" onclick="first('f23', 's23', 'd23', 'v23')">{{calendar.0.2.3|slice:"-8:10"}}</li>
+                <li id="s23"; class="hide_the_time" style="display:none" onclick="first_yelloy('f23', 's23', 'd23', 'v23')">{{calendar.0.2.3|slice:"-8:10"}}</li>
+
+                <div id="d23" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.2.3.date_begin}}
+                           min={{calendar.1.2.3}} max={{calendar.2.2.3}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.2.3.date_end}}
+                           min={{calendar.1.2.3}} max={{calendar.2.2.3}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v23"  name="status" value={{current_month_list.2.3.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 3 row, 3 column 3.3 ====================================-->
+                <li id="f33" class="row" style="background: {{select_color.2.3}}" onclick="first('f33', 's33', 'd33', 'v33')">{{calendar.0.3.3|slice:"-8:10"}}</li>
+                <li id="s33"; class="hide_the_time" style="display:none" onclick="first_yelloy('f33', 's33', 'd33', 'v33')">{{calendar.0.3.3|slice:"-8:10"}}</li>
+
+                <div id="d33" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.3.3.date_begin}}
+                           min={{calendar.1.3.3}} max={{calendar.2.3.3}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.3.3.date_end}}
+                           min={{calendar.1.3.3}} max={{calendar.2.3.3}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v33"  name="status" value={{current_month_list.3.3.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 4 row, 3 column 4.3 ====================================-->
+                {% if calendar.0.4.3|slice:"-8:10" == "0" %}
+                    <li class="row"></li>
+                {% else %}
+                    <li id="f43" class="row" style="background: {{select_color.4.3}}" onclick="first('f43', 's43', 'd43', 'v43')">{{calendar.0.4.3|slice:"-8:10"}}</li>
+                {% endif %}
+
+                <li id="s43"; class="hide_the_time" style="display:none" onclick="first_yelloy('f43', 's43', 'd43', 'v43')">{{calendar.0.4.3|slice:"-8:10"}}</li>
+
+                <div id="d43" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.4.3.date_begin}}
+                           min={{calendar.1.4.3}} max={{calendar.2.4.3}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.4.3.date_end}}
+                           min={{calendar.1.4.3}} max={{calendar.2.4.3}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v43"  name="status" value={{current_month_list.4.3.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 5 row, 3 column 5.3 ====================================-->
+                {% if calendar.0.5.3|slice:"-8:10" == "0" or calendar.0.5.6|slice:"-8:10" == NULL %}
+                    <li class="row"></li>
+                {% else %}
+                    <li id="f53" class="row" style="background: {{select_color.5.3}}" onclick="first('f53', 's53', 'd53', 'v53')">{{calendar.0.5.3|slice:"-8:10"}}</li>
+                {% endif %}
+
+                <li id="s53"; class="hide_the_time" style="display:none" onclick="first_yelloy('f53', 's53', 'd53', 'v53')">{{calendar.0.5.3|slice:"-8:10"}}</li>
+
+                <div id="d53" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.5.3.date_begin}}
+                           min={{calendar.1.5.3}} max={{calendar.2.5.3}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.5.3.date_end}}
+                           min={{calendar.1.5.3}} max={{calendar.2.5.3}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v53"  name="status" value={{current_month_list.5.3.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+        </ul>
+        <ul class="table">
+
+<!--================== 4 column ====================================-->
+            <li class="table_title">Пятница</li>
+<!--================== 0 row, 4 column 0.4 ====================================-->
+                {% if calendar.0.0.4|slice:"-8:10" == "0" %}
+                    <li class="row"></li>
+                {% else %}
+                    <li id="f04" class="row" style="background: {{select_color.0.4}}" onclick="first('f04', 's04', 'd04', 'v04')">{{calendar.0.0.4|slice:"-8:10"}}</li>
+                {% endif %}
+                <li id="s04"; class="hide_the_time" style="display:none" onclick="first_yelloy('f04', 's04', 'd04', 'v04')">{{calendar.0.0.4|slice:"-8:10"}}</li>
+
+                <div id="d04" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.0.4.date_begin}}
+                           min={{calendar.1.0.4}} max={{calendar.2.0.4}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.0.4.date_end}}
+                           min={{calendar.1.0.4}} max={{calendar.2.0.4}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v04"  name="status" value={{current_month_list.0.4.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 1 row, 4 column 4.1 ====================================-->
+                <li id="f14" class="row" style="background: {{select_color.1.4}}" onclick="first('f14', 's14', 'd14', 'v14')">{{calendar.0.1.4|slice:"-8:10"}}</li>
+                <li id="s14"; class="hide_the_time" style="display:none" onclick="first_yelloy('f14', 's14', 'd14', 'v14')">{{calendar.0.1.4|slice:"-8:10"}}</li>
+
+                <div id="d14" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.1.4.date_begin}}
+                           min={{calendar.1.1.4}} max={{calendar.2.1.4}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.1.4.date_end}}
+                           min={{calendar.1.1.4}} max={{calendar.2.1.4}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v14"  name="status" value={{current_month_list.1.4.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 2 row, 4 column 2.4 ====================================-->
+                <li id="f24" class="row" style="background: {{select_color.2.4}}" onclick="first('f24', 's24', 'd24', 'v24')">{{calendar.0.2.4|slice:"-8:10"}}</li>
+                <li id="s24"; class="hide_the_time" style="display:none" onclick="first_yelloy('f24', 's24', 'd24', 'v24')">{{calendar.0.2.4|slice:"-8:10"}}</li>
+
+                <div id="d24" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.2.4.date_begin}}
+                           min={{calendar.1.2.4}} max={{calendar.2.2.4}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.2.4.date_end}}
+                           min={{calendar.1.2.4}} max={{calendar.2.2.4}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v24"  name="status" value={{current_month_list.2.4.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 3 row, 4 column 3.4 ====================================-->
+                <li id="f34" class="row" style="background: {{select_color.3.4}}" onclick="first('f34', 's34', 'd34', 'v34')">{{calendar.0.3.4|slice:"-8:10"}}</li>
+                <li id="s34"; class="hide_the_time" style="display:none" onclick="first_yelloy('f34', 's34', 'd34', 'v34')">{{calendar.0.3.4|slice:"-8:10"}}</li>
+
+                <div id="d34" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.3.4.date_begin}}
+                           min={{calendar.1.3.4}} max={{calendar.2.3.4}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.3.4.date_end}}
+                           min={{calendar.1.3.4}} max={{calendar.2.3.4}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v34"  name="status" value={{current_month_list.3.4.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 4 row, 4 column 4.4 ====================================-->
+                {% if calendar.0.4.4|slice:"-8:10" == "0" %}
+                    <li class="row"></li>
+                {% else %}
+                    <li id="f44" class="row" style="background: {{select_color.4.4}}" onclick="first('f44', 's44', 'd44', 'v44')">{{calendar.0.4.4|slice:"-8:10"}}</li>
+                {% endif %}
+                <li id="s44"; class="hide_the_time" style="display:none" onclick="first_yelloy('f44', 's44', 'd44', 'v44')">{{calendar.0.4.4|slice:"-8:10"}}</li>
+
+                <div id="d44" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.4.4.date_begin}}
+                           min={{calendar.1.4.4}} max={{calendar.2.4.4}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.4.4.date_end}}
+                           min={{calendar.1.4.4}} max={{calendar.2.4.4}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v44"  name="status" value={{current_month_list.4.4.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 5 row, 4 column 5.4 ====================================-->
+                {% if calendar.0.5.4|slice:"-8:10" == "0" or calendar.0.5.6|slice:"-8:10" == NULL %}
+                    <li class="row"></li>
+                {% else %}
+                    <li id="f54" class="row" style="background: {{select_color.5.4}}" onclick="first('f54', 's54', 'd54', 'v54')">{{calendar.0.5.4|slice:"-8:10"}}</li>
+                {% endif %}
+                <li id="s54"; class="hide_the_time" style="display:none" onclick="first_yelloy('f54', 's54', 'd54', 'v54')">{{calendar.0.5.4|slice:"-8:10"}}</li>
+
+                <div id="d54" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.5.4.date_begin}}
+                           min={{calendar.1.5.4}} max={{calendar.2.5.4}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.5.4.date_end}}
+                           min={{calendar.1.5.4}} max={{calendar.2.5.4}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v54"  name="status" value={{current_month_list.5.4.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+        </ul>
+        <ul class="table">
+
+<!--================== 5 column ====================================-->
+            <li class="table_title">Суббота</li>
+<!--================== 0 row, 5 column 0.5 ====================================-->
+                {% if calendar.0.0.5|slice:"-8:10" == "0" %}
+                    <li class="row"></li>
+                {% else %}
+                    <li id="f05" class="row" style="background: {{select_color.0.5}}" onclick="first('f05', 's05', 'd05', 'v05')">{{calendar.0.0.5|slice:"-8:10"}}</li>
+                {% endif %}
+                <li id="s05"; class="hide_the_time" style="display:none" onclick="first_yelloy('f05', 's05', 'd05', 'v05')">{{calendar.0.0.5|slice:"-8:10"}}</li>
+
+                <div id="d05" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.0.5.date_begin}}
+                           min={{calendar.1.0.5}} max={{calendar.2.0.5}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.0.5.date_end}}
+                           min={{calendar.1.0.5}} max={{calendar.2.0.5}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v05"  name="status" value={{current_month_list.0.5.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 1 row, 5 column 1.5 ====================================-->
+                <li id="f15" class="row" style="background: {{select_color.1.5}}" onclick="first('f15', 's15', 'd15', 'v15')">{{calendar.0.1.5|slice:"-8:10"}}</li>
+                <li id="s15"; class="hide_the_time" style="display:none" onclick="first_yelloy('f15', 's15', 'd15', 'v15')">{{calendar.0.1.5|slice:"-8:10"}}</li>
+
+                <div id="d15" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.1.5.date_begin}}
+                           min={{calendar.1.1.5}} max={{calendar.2.1.5}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.1.5.date_end}}
+                           min={{calendar.1.1.5}} max={{calendar.2.1.5}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v15"  name="status" value={{current_month_list.1.5.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 2 row, 5 column 2.5 ====================================-->
+                <li id="f25" class="row" style="background: {{select_color.2.5}}" onclick="first('f25', 's25', 'd25', 'v25')">{{calendar.0.2.5|slice:"-8:10"}}</li>
+                <li id="s25"; class="hide_the_time" style="display:none" onclick="first_yelloy('f25', 's25', 'd25', 'v25')">{{calendar.0.2.5|slice:"-8:10"}}</li>
+
+                <div id="d25" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.2.5.date_begin}}
+                           min={{calendar.1.2.5}} max={{calendar.2.2.5}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.2.5.date_end}}
+                           min={{calendar.1.2.5}} max={{calendar.2.2.5}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v25"  name="status" value={{current_month_list.2.5.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 3 row, 5 column 3.5 ====================================-->
+                <li id="f35" class="row" style="background: {{select_color.3.5}}" onclick="first('f35', 's35', 'd35', 'v35')">{{calendar.0.3.5|slice:"-8:10"}}</li>
+                <li id="s35"; class="hide_the_time" style="display:none" onclick="first_yelloy('f35', 's35', 'd35', 'v35')">{{calendar.0.3.5|slice:"-8:10"}}</li>
+
+                <div id="d35" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.3.5.date_begin}}
+                           min={{calendar.1.3.5}} max={{calendar.2.3.5}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.3.5.date_end}}
+                           min={{calendar.1.3.5}} max={{calendar.2.3.5}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v35"  name="status" value={{current_month_list.3.5.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 4 row, 5 column 4.5 ====================================-->
+                {% if calendar.0.4.5|slice:"-8:10" == "0" %}
+                    <li class="row"></li>
+                {% else %}
+                    <li id="f45" class="row" style="background: {{select_color.4.5}}" onclick="first('f45', 's45', 'd45', 'v45')">{{calendar.0.4.5|slice:"-8:10"}}</li>
+                {% endif %}
+
+                <li id="s45"; class="hide_the_time" style="display:none" onclick="first_yelloy('f45', 's45', 'd45', 'v45')">{{calendar.0.4.5|slice:"-8:10"}}</li>
+
+                <div id="d45" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.4.5.date_begin}}
+                           min={{calendar.1.4.5}} max={{calendar.2.4.5}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.4.5.date_end}}
+                           min={{calendar.1.4.5}} max={{calendar.2.4.5}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v45"  name="status" value={{current_month_list.4.5.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 5 row, 5 column 5.5 ====================================-->
+                {% if calendar.0.5.5|slice:"-8:10" == "0" or calendar.0.5.6|slice:"-8:10" == NULL %}
+                    <li class="row"></li>
+                {% else %}
+                    <li id="f55" class="row" style="background: {{select_color.5.5}}" onclick="first('f55', 's55', 'd55', 'v55')">{{calendar.0.5.5|slice:"-8:10"}}</li>
+                {% endif %}
+                <li id="s55"; class="hide_the_time" style="display:none" onclick="first_yelloy('f55', 's55', 'd55', 'v55')">{{calendar.0.5.5|slice:"-8:10"}}</li>
+
+                <div id="d55" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.5.5.date_begin}}
+                           min={{calendar.1.5.5}} max={{calendar.2.5.5}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.5.5.date_end}}
+                           min={{calendar.1.5.5}} max={{calendar.2.5.5}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v55"  name="status" value={{current_month_list.5.5.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+        </ul>
+        <ul class="table">
+
+<!--================== 6 column ====================================-->
+            <li class="table_title">Воскресенье</li>
+<!--================== 0 row, 6 column 0.6 ====================================-->
+            {% if calendar.0.0.6|slice:"-8:10" == "0" %}
+                <li class="row"></li>
+            {% else %}
+                <li id="f06" class="row" style="background: {{select_color.0.6}}" onclick="first('f06', 's06', 'd06', 'v06')">{{calendar.0.0.6|slice:"-8:10"}}</li>
+            {% endif %}
+                <li id="s06"; class="hide_the_time" style="display:none" onclick="first_yelloy('f06', 's06', 'd06', 'v06')">{{calendar.0.0.6|slice:"-8:10"}}</li>
+
+                <div id="d06" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.0.6.date_begin}}
+                           min={{calendar.1.0.6}} max={{calendar.2.0.6}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.0.6.date_end}}
+                           min={{calendar.1.0.6}} max={{calendar.2.0.6}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v06"  name="status" value={{current_month_list.0.6.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 1 row, 6 column 1.6 ====================================-->
+
+                <li id="f16" class="row" style="background: {{select_color.1.6}}" onclick="first('f16', 's16', 'd16', 'v16')">{{calendar.0.1.6|slice:"-8:10"}}</li>
+                <li id="s16"; class="hide_the_time" style="display:none" onclick="first_yelloy('f16', 's16', 'd16', 'v16')">{{calendar.0.1.6|slice:"-8:10"}}</li>
+
+                <div id="d16" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.1.6.date_begin}}
+                           min={{calendar.1.1.6}} max={{calendar.2.1.6}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.1.6.date_end}}
+                           min={{calendar.1.1.6}} max={{calendar.2.1.6}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v16"  name="status" value={{current_month_list.1.6.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 2 row, 6 column 2.6 ====================================-->
+
+                <li id="f26" class="row" style="background: {{select_color.2.6}}" onclick="first('f26', 's26', 'd26', 'v26')">{{calendar.0.2.6|slice:"-8:10"}}</li>
+                <li id="s26"; class="hide_the_time" style="display:none" onclick="first_yelloy('f26', 's26', 'd26', 'v26')">{{calendar.0.2.6|slice:"-8:10"}}</li>
+
+                <div id="d26" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.2.6.date_begin}}
+                           min={{calendar.1.2.6}} max={{calendar.2.2.6}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.2.6.date_end}}
+                           min={{calendar.1.2.6}} max={{calendar.2.2.6}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v26"  name="status" value={{current_month_list.2.6.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 3 row, 6 column 3.6 ====================================-->
+                <li id="f36" class="row" style="background: {{select_color.3.6}}" onclick="first('f36', 's36', 'd36', 'v36')">{{calendar.0.3.6|slice:"-8:10"}}</li>
+                <li id="s36"; class="hide_the_time" style="display:none" onclick="first_yelloy('f36', 's36', 'd36', 'v36')">{{calendar.0.3.6|slice:"-8:10"}}</li>
+
+                <div id="d36" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.3.6.date_begin}}
+                           min={{calendar.1.3.6}} max={{calendar.2.3.6}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.3.6.date_end}}
+                           min={{calendar.1.3.6}} max={{calendar.2.3.6}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v36"  name="status" value={{current_month_list.3.6.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 4 row, 6 column 4.6 ====================================-->
+                {% if calendar.0.4.6|slice:"-8:10" == "0" %}
+                    <li class="row"></li>
+                {% else %}
+                    <li id="f46" class="row" style="background: {{select_color.4.6}}" onclick="first('f46', 's46', 'd46', 'v46')">{{calendar.0.4.6|slice:"-8:10"}}</li>
+                {% endif %}
+
+                <li id="s46"; class="hide_the_time" style="display:none" onclick="first_yelloy('f46', 's46', 'd46', 'v46')">{{calendar.0.4.6|slice:"-8:10"}}</li>
+
+                <div id="d46" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.4.6.date_begin}}
+                           min={{calendar.1.4.6}} max={{calendar.2.4.6}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.4.6.date_end}}
+                           min={{calendar.1.4.6}} max={{calendar.2.4.6}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+                    <input type="hidden" id="v46"  name="status" value={{current_month_list.4.6.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+
+<!--================== 5 row, 6 column 5.6 ====================================-->
+                {% if calendar.0.5.6|slice:"-8:10" == "0" or calendar.0.5.6|slice:"-8:10" == NULL %}
+                    <li class="row"></li>
+                {% else %}
+                    <li id="f56" class="row" style="background: {{select_color.5.6}}" onclick="first('f56', 's56', 'd56', 'v56')">{{calendar.0.5.6|slice:"-8:10"}}</li>
+                {% endif %}
+
+                <li id="s56"; class="hide_the_time" style="display:none" onclick="first_yelloy('f56', 's56', 'd56', 'v56')">{{calendar.0.5.6|slice:"-8:10"}}</li>
+
+                <div id="d56" style="display:none">
+                    <input type="datetime-local" name="date_begin" value={{current_month_list.5.6.date_begin}}
+                           min={{calendar.1.5.6}} max={{calendar.2.5.6}}
+                           style="height: 1rem; width: 140px; font-size: 1em;"><br>
+
+
+                    <input type="datetime-local" name="date_end" value={{current_month_list.5.6.date_end}}
+                           min={{calendar.1.5.6}} max={{calendar.2.4.6}}
+                           style="height: 1rem; width: 140px; font-size: 1em;">
+<!--                    <input type="hidden" id="v56"  name="status" value="0">-->
+                    <input type="hidden" id="v56"  name="status" value={{current_month_list.5.6.status}}>
+                    <input type="hidden" name="user_id" value={{get_user_id}}>
+                </div>
+        </ul>
+    </div>
+
+
+<button class="submit" type="submit">{{submit_button}}</button><br>
+</form><br>
+========================================================================================<br>
+{{request_status}}<br>
+========================================================================================<br>
+
+<script>
+    function test(key1, key2) {
+        //console.log(key1);
+        //console.log(document.getElementById(key1));
+        document.getElementById(key1).setAttribute('style', 'color: green');
+        alert("test is loaded");
+    }
+
+
+    function first(key1, key2, key3, key4) {
+        document.getElementById(key3).setAttribute("style", "opacity:1; transition: 1s;");
+        document.getElementById(key1).setAttribute("style", "display: none");
+        document.getElementById(key2).setAttribute("style", "display: block");
+        document.getElementById(key4).value = '1';
+        //console.log(key1);
+        //console.log(key2);
+        //console.log(key3);
+    }
+    function first_yelloy(key1, key2, key3, key4) {
+        document.getElementById(key3).setAttribute("style", "display: none");
+        document.getElementById(key2).setAttribute("style", "display: none");
+        document.getElementById(key1).setAttribute("style", "display: block; background: blue;");
+        document.getElementById(key4).value = '0';
+    }
+
+</script>
+(дата=0) = red, Рабочий день = green, Не рабочий день = blue
+<!--https://developer.mozilla.org/ru/docs/Web/API/EventTarget/dispatchEvent-->
+
+{% endif %}
+{% endblock %}
+<!--
+[
+    ['0.0', '0.1', '0.2', '0.3', '0.4', '0.5', '0.6'],
+    ['1.0', '1.1', '1.2', '1.3', '1.4', '1.5', '1.6'],
+    ['2.0', '2.1', '2.3', '2.3', '2.4', '2.5', '2.6'],
+    ['3.0', '3.1', '3.2', '3.3', '3.4', '3.5', '3.6'],
+    ['4.0', '4.1', '4.2', '4.3', '4.4', '4.5', '4.6'],
+    ['5.0', '5.1', '5.2', '5.3', '5.4', '5.5', '5.6']
+]
+-->

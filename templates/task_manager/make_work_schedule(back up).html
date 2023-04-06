@@ -1,0 +1,283 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Диспетчер задач{% endblock %}
+
+
+{% block test %}
+{% if username %}
+<!-- if username - права доступа к данным -->
+test of days {{ days }}<br>
+get_user_id = {{ get_user_id }}<br>
+
+{% if form %}
+-=-
+{% else %}
+==========================================
+
+{% endif %}
+
+КОРОЧЕ ТАК:
+https://ru.stackoverflow.com/questions/1199829/django-%D0%9A%D0%B0%D0%BA-%D0%BD%D0%BE%D1%80%D0%BC%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE-%D1%81%D0%B4%D0%B5%D0%BB%D0%B0%D1%82%D1%8C-checkbox-%D0%BD%D0%B0-%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B5-%D0%B8-%D1%81%D0%BE%D1%85%D1%80%D0%B0%D0%BD%D1%8F%D1%82%D1%8C-%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5-%D0%B8%D0%B7-%D0%BD%D0%B5%D0%B3%D0%BE-%D0%B1%D0%B5<br>
+Изучить<br>
+from toodooLogic.forms import AddListForm, AddGroupForm, AddItemForm<br>
+from toodooLogic.models import Createtask, CreateGroupOfTasks, CreateList<br>
+
+----<br>
+Изучить и это<br>
+https://mob25.com/validaciya-form-v-django/<br>
+
+
+
+{{ form_empty }}
+
+=======================------------------- all_data_form -------------------=============<br>
+{{all_data_form.0.date}}<br>
+
+{% for select_day in all_data_form %}
+test here ==========================================
+date = {{ select_day.date }}<br>
+status = {{select_day.status}}<br>
+{% endfor %}
+
+<form method="post" >
+            {% csrf_token %}
+    <div class="complete_work_schedule">
+        <table>
+
+<!-- 1 Строка           -->
+            <tr>
+	            <td> ПН </td>
+                <td> ВТ </td>
+                <td> СР </td>
+                <td> ЧТ </td>
+                <td> ПТ </td>
+                <td> СБ </td>
+                <td> ВС </td>
+            </tr>
+            <tr>
+                <td>
+                    {% if form %}
+                        {% for select_day in form %}
+                            {% if 1 < days and select_day.date_begin|date:"d" == "1" and select_day.status == "1" %}
+                                <label class="checkbox-btn">
+                                    <input type="checkbox">
+                                    <span>Checkbox #1</span>
+                                </label>
+                            {% elif select_day.date_begin|date:"d" == "1" and select_day.status == "0" %}
+                                <label class="checkbox-btn">
+                                    <input type="checkbox" disabled>
+                                    <span>Checkbox #11 </span>
+                                </label>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <label class="checkbox-btn">
+                            <input type="checkbox">
+                            <span>Checkbox #13</span>
+
+                        </label>
+
+                    {% endif %}
+
+                </td>
+
+                <td>
+                    {% if 24 < days %}
+                        <label class="checkbox-btn">
+                            <input type="checkbox">
+                            <span>Checkbox #2</span>
+                        </label>
+                    {% else %}
+                        <label class="checkbox-btn">
+                            <input type="checkbox" disabled>
+                            <span>Checkbox #22</span>
+                        </label>
+                    {% endif %}
+                </td>
+
+                <td>
+                    {% if 3 < days %}
+                        <label class="checkbox-btn">
+                            <input type="checkbox">
+                            <span>Checkbox #3</span>
+                        </label>
+                    {% else %}
+                        <label class="checkbox-btn">
+                            <input type="checkbox" disabled>
+                            <span>Checkbox #33</span>
+                        </label>
+                    {% endif %}
+                </td>
+
+                <td>
+                    {% if 4 < days %}
+                        <label class="checkbox-btn">
+                            <input type="checkbox">
+                            <span>Checkbox #4</span>
+                        </label>
+                    {% else %}
+                        <label class="checkbox-btn">
+                            <input type="checkbox" disabled>
+                            <span>Checkbox #44</span>
+                        </label>
+                    {% endif %}
+                </td>
+
+                <td>
+                    {% if 5 < days %}
+                        <label class="checkbox-btn">
+                            <input type="checkbox">
+                            <span>Checkbox #5</span>
+                        </label>
+                    {% else %}
+                        <label class="checkbox-btn">
+                            <input type="checkbox" disabled>
+                            <span>Checkbox #55</span>
+                        </label>
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+    </div>
+<button class="btn btn-success" type="imput">Добавить запись</button><br>
+</form>
+1. получить в форму массив из дня, времени, статуса (пусто - не заполнено. 0 не рабочий день. 1 - рабочий)
+2. полученную строку обработать
+    2.1 не заполнено - цвет фона ()
+    2.2 0 - один цвет (не рабочий день)
+    2.3 1 - желтый ( рабочий день)
+3. собрать с формы массив заполненого.
+    3.1 все выбранные - рабочие дни
+    3.2 не выбранные отправлять как не рабочие дни
+        (https://django.fun/ru/qa/9047/)
+    3.3 всё по юзер айди
+{% endif %}
+{% endblock %}
+
+<!--  Набор чекбоксов
+<label class="checkbox-btn">
+	<input type="checkbox" checked>
+	<span>Checkbox #1</span>
+</label>
+
+<label class="checkbox-btn">
+	<input type="checkbox">
+	<span>Checkbox #2</span>
+</label>
+
+<label class="checkbox-btn">
+	<input type="checkbox">
+	<span>Checkbox #3</span>
+</label>
+
+<label class="checkbox-btn">
+	<input type="checkbox" disabled>
+	<span>Checkbox #4</span>
+</label>
+
+<label class="checkbox-btn">
+	<input type="checkbox" checked disabled>
+	<span>Checkbox #5</span>
+</label>
+-->
+
+<form method="post" >
+    {% csrf_token %}
+        {{form_empty.date_begin}}<br>
+        {{form_empty.date_end}}<br>
+    {{form_empty.profile_id.as_hidden}}<br>
+    {{form_empty.status.as_hidden}}<br>
+==========================<br>
+
+        {{form_empty.date_begin}}<br>
+        {{form_empty.date_end}}<br>
+    {{form_empty.profile_id.as_hidden}}<br>
+    {{form_empty.status.as_hidden}}<br>
+<!--value="DEFAULT PSW"-->
+Рассписание работы на будующее!
+    должно быть так
+    начало работы
+    конец работы
+
+    и! шаблоны времени работы (шаблон 5и дневки, и другие если надо)
+
+<button class="btn btn-success" type="imput">Добавить запись</button><br>
+</form>
+
+
+резерв рабочее заполнение
+<form method="post" >
+    {% csrf_token %}
+
+<!--value="DEFAULT PSW"-->
+<table>
+    <tr>
+	    <td> ПН </td>
+        <td> ВТ </td>
+        <td> СР </td>
+        <td> ЧТ </td>
+        <td> ПТ </td>
+        <td> СБ </td>
+        <td> ВС </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="datetime-local" name="date_begin" value={{calendar.0.0.0}} ><br>
+            <input type="datetime-local" name="date_end" value={{calendar.1.0.0}} ><br>
+            {{form_empty.user_id.as_hidden}}<br>
+            {{form_empty.status.as_hidden}}<br>
+        </td>
+
+        <td>
+            <input type="datetime-local" name="date_begin" value={{calendar.0.0.1}} ><br>
+            <input type="datetime-local" name="date_end" value={{calendar.1.0.1}} ><br>
+            {{form_empty.user_id.as_hidden}}<br>
+            {{form_empty.status.as_hidden}}<br>
+        </td>
+
+        <td>
+            <input type="datetime-local" name="date_begin" value={{calendar.0.0.2}} ><br>
+            <input type="datetime-local" name="date_end" value={{calendar.1.0.2}} ><br>
+            {{form_empty.user_id.as_hidden}}<br>
+            {{form_empty.status.as_hidden}}<br>
+        </td>
+
+        <td>
+            <input type="datetime-local" name="date_begin" value={{calendar.0.0.3}} ><br>
+            <input type="datetime-local" name="date_end" value={{calendar.1.0.3}} ><br>
+            {{form_empty.user_id.as_hidden}}<br>
+            {{form_empty.status.as_hidden}}<br>
+        </td>
+
+        <td>
+            <input type="datetime-local" name="date_begin" value={{calendar.0.0.4}} ><br>
+            <input type="datetime-local" name="date_end" value={{calendar.1.0.4}} ><br>
+            {{form_empty.user_id.as_hidden}}<br>
+            {{form_empty.status.as_hidden}}<br>
+        </td>
+
+        <td>
+            <input type="datetime-local" name="date_begin" value={{calendar.0.0.5}} ><br>
+            <input type="datetime-local" name="date_end" value={{calendar.1.0.5}} ><br>
+            {{form_empty.user_id.as_hidden}}<br>
+            {{form_empty.status.as_hidden}}<br>
+        </td>
+
+        <td>
+            <input type="datetime-local" name="date_begin" value={{calendar.0.0.6}} ><br>
+            <input type="datetime-local" name="date_end" value={{calendar.1.0.6}} ><br>
+            {{form_empty.user_id.as_hidden}}<br>
+            {{form_empty.status.as_hidden}}<br>
+        </td>
+    </tr>
+</table>
+
+Рассписание работы на будующее!
+    должно быть так
+    начало работы
+    конец работы
+
+    и! шаблоны времени работы (шаблон 5и дневки, и другие если надо)
+
+<button class="btn btn-success" type="imput">Добавить запись</button><br>
+</form>

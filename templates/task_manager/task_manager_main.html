@@ -1,0 +1,325 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Мои задачи{% endblock %}
+
+
+{% block content %}
+{% if username %}
+<!-- if username - права доступа к данным -->
+<!-- # значит что откроется в этой странице, а не в другой -->
+<!--    <a href="#make_task"><button class="submit">Создать задачу</button></a>-->
+
+
+    <div id="make_task" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">test</h3>
+                    <a href="#close" title="Close" class="close">×</a>
+                </div>
+                <div class="modal-body">
+                    &#9773; make task:<br>
+                    <form action="#close" method="post">
+                        {% csrf_token %}
+                        <input type="text" name="title" id="title" placeholder="Название задачи" ><br>
+                        <input type="text" name="description" placeholder="Описание задачи"><br>
+
+                        &#9719; Дата и время начала задачи:<br>
+
+                        <div>
+<!--                            <input type="date" name="task_making_date_DATE"  value="2023-03-14">-->
+                            <input type="date" name="tmd_DATE" id="tmd_DATE" class="input-txt" placeholder="Дата">
+
+                            <input type="text" name="tmd_TIME" id="tmd_TIME" value="" list="time" autocomplete="on" placeholder="time"><br>
+                            <datalist id="time">
+                                {% for el in time_picker_list %}
+                                    <option value={{el}}></option>
+                                {% endfor %}
+                            </datalist>
+                        </div>
+
+<!--                        <input type="date" name="task_begin_date"><br>-->
+
+                        Срок выполнения:<br>
+                        <input type="datetime-local" name="due_date" ><br>
+
+<li id="completed_btn"     class="row" style="display:block; background:blue" onclick="first('completed_btn', 'not_completed_btn', 'status')">Активна</li>
+<li id="not_completed_btn" class="row" style="display:none; background:green " onclick="second('completed_btn', 'not_completed_btn', 'status' )">Пассивна (Завершена)</li>
+                            <input type="hidden" name="completed" id="status"  value="0">
+                        <!--status 0 - активна.    status 1 - завершена                     -->
+                        <br>
+
+
+
+                        <input type="text" name="task_executor" value="" list="task_executor" onclick="test()" autocomplete="on" placeholder="Исполнитель задачи"><br>
+                            <datalist id="task_executor">
+                                {% for el in users_list %}
+                                    <option value={{el}}>{{el}}</option>
+                                {% endfor %}
+                            </datalist>
+
+                        <button class="submit" type="submit" >Создать задачу</button><br>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--==================================================-->
+
+
+
+
+
+<script>
+    function test(){
+        console.log('test');
+    }
+
+    function first(key1, key2, key3) {
+        //document.getElementById(key3).setAttribute("style", "opacity:1; transition: 1s;");
+        document.getElementById(key1).setAttribute("style", "display: none");
+        document.getElementById(key2).setAttribute("style", "display: block; background: green;");
+        document.getElementById(key3).value = '1';
+        console.log('first');
+        //console.log(key2);
+        //console.log(key3);
+    }
+    function second(key1, key2, key3) {
+        //document.getElementById(key3).setAttribute("style", "display: none");
+        document.getElementById(key2).setAttribute("style", "display: none");
+        document.getElementById(key1).setAttribute("style", "display: block; background: blue;");
+        document.getElementById(key3).value = '0';
+        //console.log('second');
+    }
+</script>
+=============================================================<br>
+<!--<a href="#make_task">-->
+
+
+
+<div class="task_manager_table" id="paintedCells">
+
+    <div class="task_manager_row">
+<!--        <div class="task_manager_cell task_manager_hour-cell"></div>-->
+        <div class=" task_manager_hour-cell">Время</div>
+            <div class="task_manager_date-group"     >
+                <div  class="task_manager_cell">01</div>
+                <div  class="task_manager_cell">02</div>
+            </div>
+    </div>
+
+{% for el in hours_list %}
+  <div class="task_manager_row" >
+    <div class="task_manager_hour-cell">{{el}}</div>
+
+    <div class="task_manager_cell-group"     >
+      <div class="task_manager_cell" onclick="cellClicked('{{el}}', '00')"></div>
+      <div class="task_manager_cell" onclick="cellClicked('{{el}}', '15')"></div>
+      <div class="task_manager_cell" onclick="cellClicked('{{el}}', '30')"></div>
+      <div class="task_manager_cell" onclick="cellClicked('{{el}}', '45')"></div>
+    </div>
+
+    <div class="task_manager_cell-group"     >
+      <div class="task_manager_cell" onclick="cellClicked('{{el}}', '00')"></div>
+      <div class="task_manager_cell" onclick="cellClicked('{{el}}', '15')"></div>
+      <div class="task_manager_cell" onclick="cellClicked('{{el}}', '30')"></div>
+      <div class="task_manager_cell" onclick="cellClicked('{{el}}', '45')"></div>
+    </div>
+
+  </div>
+
+    <!-- repeat for all hours of the day -->
+
+{% endfor %}
+</div>
+
+
+
+Сделать:
+вызов кнопки солздать задачу
+передать туда параметры
+тиражировать циклом
+<script>
+
+function cellClicked(row, col) {
+  // Do something when cell is clicked, using the row and col arguments
+  //console.log("Cell clicked: row=" + row + ", col=" + col);
+  location.href='#make_task';
+  document.getElementById("tmd_DATE").value = "2023-03-14";
+  document.getElementById("tmd_TIME").value = row + ":" + col;
+  //console.log(row + ":" + col);
+
+}
+//paintedCells.onmouseover = function(event) {
+
+//document.getElementsByClassName("task_manager_cell")
+
+paintedCells.onmouseover = function(event) {
+  let target = event.target;
+  //target.style.background = 'pink';
+
+  if (target.className=="task_manager_cell") {
+    console.log("test test test");
+    target.style.background = 'rgb(26,115,232)';
+    }
+  //text.value += "mouseover " + target.tagName + "\n";
+  //text.scrollTop = text.scrollHeight;
+};
+
+paintedCells.onmouseout = function(event) {
+  let target = event.target;
+  target.style.background = '';
+  //text.value += "mouseout " + target.tagName + "\n";
+  //text.scrollTop = text.scrollHeight;
+};
+
+
+
+
+</script>
+
+
+
+
+
+
+{% endif %}
+{% endblock %}
+
+
+==============================================================================================================
+Записи в таблице Task manager<br>
+
+{% for el in tasks %}
+    New task:<br>
+    {{el.title}}<br>
+    {{el.description}}<br>
+    {{el.task_making_date}}<br>
+    {{el.task_begin_date}}<br>
+    {{el.due_date}}<br>
+    {{el.completed}}<br>
+    {{el.task_author}}<br>
+    {{el.task_executor}}<br>
+    {{el.user_id}}<br>
+{% endfor %}<br>
+
+
+=======================
+<div class="time_block_table">
+    <ul class="time_sidebar">
+        <li class="li_sidebar">13:00</li>
+<!--        <li>14:00</li>-->
+    </ul>
+
+    <ul class="table_time_column">
+        <li class="time_item" id="1"> <a href="#make_task" onclick="data_transfer(1)">  13 </a>  </li>
+        <li class="time_item" id="2">13:15</li>
+        <li class="time_item" id="3">13:30</li>
+        <li class="time_item" id="4">13:45</li>
+    </ul>
+</div>
+
+
+<div>
+
+<!--    <a href="#make_task" onclick="data_transfer(1)"> <li class="time_item" id="1"></li> </a>-->
+<!--    <li class="time_item" id="2">13:15</li>-->
+<!--    <li class="time_item" id="3">13:30</li>-->
+<!--    <li class="time_item" id="4">13:45</li>-->
+
+</div>
+
+<script>
+document.addEventListener("mousedown", function(e) {
+  if (e.target.className=="time_item") {
+    console.log(e.target.id);
+    console.log(document.getElementById(e.target.id));
+
+    //console.log(getComputedStyle( document.getElementById(e.target.id) ).backgroundColor );
+    if (getComputedStyle( document.getElementById(e.target.id) ).backgroundColor=='rgb(0, 0, 255)' ){
+        console.log("backgroundColor");
+        document.getElementById(e.target.id).setAttribute("style", "display: block; background: None;");
+    }
+    else {
+        document.getElementById(e.target.id).setAttribute("style", "display: block; background: blue;");
+    }
+  }
+});
+
+function data_transfer(id1)
+    {
+        //console.log("id1");
+        document.getElementById("title").value = '000';
+
+        //document.getElementById("tmd_DATE").value = '2022-01-31';
+        document.getElementById("tmd_TIME").value = '13:00';
+    }
+//value="2018-06-12T19:30"
+</script>
+
+15.03.2023
+=============================================================<br>
+<!--<a href="#make_task">-->
+<div class="task_manager_table" id="paintedCells___">
+  <div class="task_manager_row">
+    <div class="task_manager_cell task_manager_hour-cell">00:00</div>
+    <div class="task_manager_cell-group"     >
+      <div class="task_manager_cell" onclick="cellClicked('00', '00')"></div>
+      <div class="task_manager_cell" onclick="cellClicked('00', '15')"></div>
+      <div class="task_manager_cell" onclick="cellClicked('00', '30')"></div>
+      <div class="task_manager_cell" onclick="cellClicked('00', '45')"></div>
+    </div>
+    <!-- repeat for all hours of the day -->
+  </div>
+
+  <div class="task_manager_row">
+    <div class="task_manager_cell task_manager_hour-cell">01:00</div>
+    <div class="task_manager_cell-group" >
+      <div class="task_manager_cell" onclick="cellClicked(1, 1)"></div>
+      <div class="task_manager_cell" onclick="cellClicked(1, 2)"></div>
+      <div class="task_manager_cell" onclick="cellClicked(1, 3)"></div>
+      <div class="task_manager_cell" onclick="cellClicked(1, 4)"></div>
+    </div>
+    <!-- repeat for all hours of the day -->
+  </div>
+</div>
+
+
+==============
+//================= spy test
+// create a canvas element
+var canvas = document.createElement('canvas');
+
+// set the canvas dimensions
+canvas.width = 400;
+canvas.height = 300;
+
+// get the 2D context
+var ctx = canvas.getContext('2d');
+
+// draw some shapes
+ctx.fillRect(50, 50, 100, 100);
+ctx.beginPath();
+ctx.arc(200, 150, 50, 0, Math.PI * 2);
+ctx.stroke();
+
+// get image data
+var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+// collect data
+var canvasData = {
+  dimensions: {
+    width: canvas.width,
+    height: canvas.height
+  },
+  pixelData: imageData.data,
+  browserInfo: {
+    userAgent: navigator.userAgent,
+    platform: navigator.platform,
+    language: navigator.language,
+    screenWidth: screen.width,
+    screenHeight: screen.height
+  }
+};
+
+console.log(canvasData);

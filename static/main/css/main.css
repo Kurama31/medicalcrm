@@ -1,0 +1,807 @@
+body {
+    background: #2c2c2c;
+    display: flex;
+    max-width: 100%; /* max Shirina */
+    color: white;
+
+
+}
+/* =========== Меню слева ===========================================================*/
+aside {
+    float: left;  /* Выравнивание по левому краю */
+    background: #181818; /* Цвет фона */
+    width: 15%; /* Ширина блока aside */
+    padding: 2.1%; /* Отступы в % от экрана */
+    height: 100vh; /* высота в % от экрана */
+    color: white; /* Цвет текста блока #fff*/
+    border-right: 5px solid #4d4d4d; /* Обводка по правой стороне и её цвет */
+    text-decoration: none;
+    /*font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%*/
+}
+
+aside img {
+    width: 80px; /* ширина для картинки в блоке aside */
+    float: left; /* позиционирование с лева */
+    max-width: 100%;
+
+}
+/* обращение к span в файле layout по тегу logo */
+aside .logo {
+    color: green;
+	width: 300px;
+	margin: 15px auto;
+	position: relative;
+	margin: 1 0 15px 0;
+
+}
+/*  */
+aside h3 {
+    margin-top: 20px; /* отступ сверху */
+    font-size: 1.25vw, 100%;
+    max-width: 50px;
+    padding: inherit;
+
+}
+
+/* меню навигации */
+aside ul {
+    list-style: none;
+
+    /*font-size: 1.25vw; /* масштабируемый текст */
+    font-size: 100%;
+    max-width: 100%;
+    padding: inherit;
+
+
+}
+aside ul li {
+    text-decoration: none;
+    color: white; /* Цвет шрифта #fff */
+    display: block; /* каждый элемент будет блочным элементом */
+    margin-top: 20px; /* Отступ с верху */
+    transition: transform .6s ease; /* Замедление увеличение ссылки при навдеении на 600 милесекунд (all - to all)*/
+
+}
+
+/* Добавление стиля при наведение на теги ul, a */
+aside ul li:hover, aside ul a:hover {
+    color: #eb5959;
+    text-decoration: none; /* убирает нижнее подчёркивание при новедении */
+    transform: scale(1.05); /* увеличение текста на 5% при наведении */
+
+}
+
+/* =========== Меню слева конец ===========================================================*/
+
+/* =========== Кнопки шедуллера ===========================================================*/
+.btn-group button {
+    background-color: #4CAF50; /* Green background */
+    border: 5px solid green; /* Green border */
+    color: white; /* White text */
+    text-align: left;
+    padding: 10px 50px; /* (высота и ширина) размер каждой кнопки */
+    cursor: pointer; /* Pointer/hand icon */
+    width: 200px; /* Set a width if needed 100%;*/
+    display: block; /* Make the buttons appear below each other */
+}
+.btn-group-empty button {
+    background-color: #666666; /* background */
+    border: 5px solid green; /* Green border */
+    color: white; /* White text */
+    text-align: left;
+    padding: 10px 50px; /* (высота и ширина) размер каждой кнопки */
+    cursor: pointer; /* Pointer/hand icon */
+    width: 200px; /* Set a width if needed 100%;*/
+    display: block; /* Make the buttons appear below each other */
+}
+
+.btn-group button:not(:last-child) {
+    border-bottom: none; /* Prevent double borders */
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+    background-color: #3e8e41;
+}
+/* =========== Кнопки шедуллера end ===========================================================*/
+
+/* =========== Выравнивание всего блока с контентом ============*/
+.container {
+    display: flex;
+    width: 100%;
+    flex-direction:column;
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    margin:auto;
+    margin-top: 10px;
+}
+
+.top-bar {
+    width: 100%;
+    height:50px;
+    margin-top: 10px;
+    text-align: right;
+}
+/* =========== Заполнить расписание ============ */
+.complete_work_schedule{
+    text-align: right;
+    margin-top: 10px;
+}
+
+/*=================== LOGIN BLOCK ====================================================*/
+/* Устанавливает для всех полей импут текст следующие настройки: */
+input[type=text] {
+  /*padding: 9px;*/
+  margin:10px 0; // add top and bottom margin (внешний отступ)
+  /*font-size: 54px; /* Размер шрифта */
+  font-size: 100%;
+
+}
+input[type=password] {
+  /*padding: 9px;*/
+  margin:10px 0; // add top and bottom margin (внешний отступ)
+}
+
+.error {
+  margin:10px 0; // внешний отступ
+}
+
+
+/* Кнопка входа */
+.submit {
+	width: 120px;
+	height: 32px;
+	padding: 0 0 2px;
+	font: 16px "Trebuchet MS", Tahoma, Arial, sans-serif;
+	outline: none;
+	position: relative;
+	cursor: pointer;
+	border-radius: 3px;
+	color: #5D7731;
+	text-shadow: 1px 1px #D0E5A4;
+	border: 1px solid #89A94D;
+	border-top: 1px solid #AAD063;
+	border-bottom: 1px solid #6D883B;
+	box-shadow:
+		inset 0 1px #E0EEB6,
+		inset 1px 0 #C6E08D,
+		inset -1px 0 #C6E08D,
+		inset 0 -1px #B4D579,
+		0 2px #799545,
+		0 3px #6D883B,
+		0 4px 2px rgba(0,0,0,0.4)
+	;
+	background: -moz-linear-gradient(top,  #cae285 0%, #a3cd5a 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cae285), color-stop(100%,#a3cd5a)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #cae285 0%,#a3cd5a 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #cae285 0%,#a3cd5a 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #cae285 0%,#a3cd5a 100%); /* IE10+ */
+	background: linear-gradient(top,  #cae285 0%,#a3cd5a 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cae285', endColorstr='#a3cd5a',GradientType=0 ); /* IE6-9 */
+	background-color: #B6D76F;
+}
+.submit::-moz-focus-inner{border:0}
+.submit:hover {
+	border-top: 1px solid #98B85B;
+	box-shadow:
+		inset 0 1px #CCE3A1,
+		inset 1px 0 #C6E08D,
+		inset -1px 0 #C6E08D,
+		inset 0 -1px #C7E18E,
+		0 2px #799545,
+		0 3px #6D883B,
+		0 4px 2px rgba(0,0,0,0.4)
+	;
+	background: -moz-linear-gradient(top,  #abd164 0%, #b9d972 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#abd164), color-stop(100%,#b9d972)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #abd164 0%,#b9d972 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #abd164 0%,#b9d972 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #abd164 0%,#b9d972 100%); /* IE10+ */
+	background: linear-gradient(top,  #abd164 0%,#b9d972 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#abd164', endColorstr='#b9d972',GradientType=0 ); /* IE6-9 */
+	background-color: #B6D76F;
+}
+.submit:active {
+	top: 3px;
+	border: 1px solid #88A84E;
+	border-top: 1px solid #6E883F;
+	border-bottom: 1px solid #95B855;
+	background: #A7CF5F;
+	box-shadow: inset 0 1px 2px #779441;
+}
+
+
+/* свойства модального (всплывающего) окна по умолчанию */
+.modal {
+    position: fixed; /* фиксированное положение */
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.5); /* цвет фона */
+    z-index: 1050;
+    opacity: 0; /* по умолчанию модальное окно прозрачно */
+    -webkit-transition: opacity 200ms ease-in;
+    -moz-transition: opacity 200ms ease-in;
+    transition: opacity 200ms ease-in; /* анимация перехода */
+    pointer-events: none; /* элемент невидим для событий мыши */
+    margin: 0;
+    padding: 0;
+}
+/* при отображении модального окно */
+.modal:target {
+    opacity: 1; /* делаем окно видимым */
+	  pointer-events: auto; /* элемент видим для событий мыши */
+    overflow-y: auto; /* добавляем прокрутку по y, когда элемент не помещается на страницу */
+}
+/* ширина модального окна и его отступы от экрана */
+.modal-dialog {
+    position: relative;
+    width: auto;
+    margin: 10px;
+}
+@media (min-width: 576px) {
+  .modal-dialog {
+      max-width: 500px;
+      margin: 30px auto; /* для отображения модального окна по центру */
+  }
+}
+/* свойства для блока, содержащего контент модального окна (окно которое не прозрачное) */
+.modal-content {
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: .3rem;
+    outline: 0;
+}
+@media (min-width: 768px) {
+  .modal-content {
+      -webkit-box-shadow: 0 5px 15px rgba(0,0,0,.5);
+      box-shadow: 0 5px 15px rgba(0,0,0,.5);
+  }
+}
+/* свойства для заголовка модального окна */
+.modal-header {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid #eceeef;
+}
+.modal-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 1.5;
+    font-size: 1.25rem; /* rem всегда отталкивается от базового размера шрифта */
+    font-weight: 500;
+    color: black;
+}
+/* свойства для кнопки "Закрыть" */
+.close {
+    float: right;
+    font-family: sans-serif;
+    /*font-size: 24px;*/
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+    text-decoration: none;
+}
+/* свойства для кнопки "Закрыть" при нахождении её в фокусе или наведении */
+.close:focus, .close:hover {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    opacity: .75;
+}
+/* свойства для блока, содержащего основное содержимое окна */
+.modal-body {
+  position: relative;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 15px;
+    overflow: auto;
+    color: black;
+}
+
+/* Показать/скрыть пароль, размер input */
+.login {
+    width: 100%;
+	margin: 15px auto;
+	position: relative;
+}
+
+#login-input {
+	width: 100%;
+	padding: 5px 0;
+	height: 30px;
+	line-height: 40px;
+	text-indent: 10px;
+	margin: 0 0 15px 0;
+	border-radius: 5px;
+	border: 1px solid #999;
+	font-size: 18px;
+}
+
+
+.password {
+	width: 100%;
+	margin: 15px auto;
+	position: relative;
+}
+#password-input {
+	width: 100%;
+	padding: 5px 0;
+	height: 30px;
+	line-height: 40px;
+	text-indent: 10px;
+	margin: 0 0 15px 0;
+	border-radius: 5px;
+	border: 1px solid #999;
+	font-size: 18px;
+}
+
+
+.eye {
+	position: absolute;
+	top: 14px;
+	right: 6px;
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+
+    #margin: 100px;
+    width: 13px;
+    height: 13px;
+    border: solid 1px #000;
+    border-radius:  75% 15%;
+    #position: relative;
+    transform: rotate(45deg);
+}
+.eye:before {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border: solid 1px #000;
+  border-radius: 50%;
+  left: 3px;
+  top: 3px;
+  background: black;
+}
+
+.eye.view {
+	border-bottom: 3px solid #f00;
+	border-radius: 50%;
+    #background: black;
+}
+
+
+
+/*=================== check box btn ====================================================*/
+.checkbox-btn {
+	display: inline-block;
+	margin: 0 5px 0 0;
+	user-select: none;
+	position: relative;
+}
+.checkbox-btn input[type=checkbox] {
+	z-index: -1;
+	opacity: 0;
+	display: block;
+	width: 0;
+	height: 0;
+}
+.checkbox-btn span {
+	display: inline-block;
+	cursor: pointer;
+	padding: 0px 10px;
+	line-height: 30px;
+	border: 1px solid #999;
+	border-radius: 4px;
+	transition: background 0.2s ease;
+}
+
+/* Checked */
+.checkbox-btn input[type=checkbox]:checked + span {
+	background: #ffe0a6;
+}
+
+/* Focus */
+.focused span {
+	box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+/* Hover */
+.checkbox-btn:hover {
+	color: #666;
+}
+
+/* Active */
+.checkbox-btn input[type=checkbox]:active:not(:disabled) + span {
+	background: #d2c5ac;
+	color: #000;
+}
+
+/* Disabled */
+.checkbox-btn input[type=checkbox]:disabled + span {
+	background: #efefef;
+	color: #666;
+	cursor: default;
+}
+.checkbox-btn input[type=checkbox]:checked:disabled + span {
+	background: #f7efdc;
+}
+/* Onclick ============================================== */
+
+p#first {
+
+cursor: pointer;
+font-family: cursive;
+width: 150.33px;
+height: 30px;
+text-align: center;
+border: 1px solid #d2d2d2;
+font-size: 13px;
+}
+
+p#first_yelloy {
+cursor: pointer;
+background: #ff9900;
+font-size: 16px;
+color: white;
+
+width: 150.33px;
+height: 30px;
+text-align: center;
+
+border: 1PX SOLID #ff9900;
+}
+
+.show_me_the_time{
+cursor: pointer;
+font-family: cursive;
+width: 166.33px;
+height: 30px;
+text-align: center;
+border: 1px solid #d2d2d2;
+font-size: 13px;
+}
+
+.hide_the_time {
+cursor: pointer;
+background: #ff9900;
+font-size: 16px;
+color: white;
+
+/*width: 166.33px;*/
+width: 100%;
+height: 30px;
+text-align: center;
+border: 1PX SOLID #ff9900;
+}
+/*=============================== Для Заполнения расписания =====================================*/
+.block_table {
+    display:flex;
+    flex-direction:row;
+}
+.table {
+    display:flex;
+    flex-direction:column;
+    border:#ссс 1px solid;
+    padding:0;
+    margin:0;
+    width:100%;
+
+}
+.table_title {
+    text-align:center;
+    font-style:none;
+    list-style:none;
+    font-size:19px;
+
+    width:100%;
+    border:#000 1px solid;
+    padding-top:10px;
+    padding-bottom:10px;
+}
+.row {
+    height: 50px;
+    width: 123px;
+    list-style:none;
+    border:#ccc 1px solid;
+    padding:10px;
+    margin:0;
+    text-align:center;
+
+}
+.row:hover {
+    list-style:none;
+    border:#ccc 1px solid;
+    padding:10px;
+    margin:0;
+    background:#e9e9e9;
+    cursor:pointer;
+}
+
+/* Задаётся для всех типов datetime-local (оба пункта делают удобным нажатие на datetime-local) */
+input[type="datetime-local"] {
+  position: relative;
+}
+
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: auto;
+  height: auto;
+  color: transparent;
+  background: transparent;
+}
+
+
+/*=======================*/
+/* Задаётся для всех типов даты (оба пункта делают удобным нажатие на дату) */
+input[type="date"] {
+  position: relative;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: auto;
+  height: auto;
+  color: transparent;
+  background: transparent;
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-clear-button {
+  z-index: -10;
+}
+
+input[type="date"]::-webkit-input-placeholder {
+  z-index: 99;
+}
+
+input[type="date"]:placeholder {
+  z-index: 99;
+}
+
+
+input[type="date"]:not(.has-value):before {
+  /*content: attr(placeholder);*/
+  width: 100%;
+}
+/*ширина и высота объекта */
+input[type="date"] {
+  padding: 8px 10px;
+}
+
+/*--SECOND--*/
+
+.pa__top-sec {
+  padding: 50px 0;
+}
+
+
+/*===========time test============*/
+.time_block_table {
+    display:flex;
+    flex-direction:row;
+}
+
+/* 1 UL */
+
+.time_sidebar{
+    height: 30px;
+    width: 123px;
+    list-style:none;
+    border:#ccc 1px solid;
+    padding:10px;
+    margin:0;
+    text-align:center;
+}
+
+.li_sidebar{
+    list-style:none;
+}
+
+/* 2 UL */
+.table_time_column{
+    flex-direction:column;
+    border:#ccc 1px solid;
+    margin:0;
+
+    display:flex;
+
+    /*display:flex;
+    flex-direction:column;
+    border:#ссс 1px solid;
+    padding:0;
+    margin:0;
+    width:100%;
+    text-align:center;
+
+    height: 9.1px;
+    width: 123px;
+    */
+}
+
+/* 4 cell in 1 */
+.time_item{
+    display:flex;
+    list-style:none;
+    /*border:#ccc 1px solid;*/
+    padding:1px;
+    margin:0;
+    text-align:center;
+    width:100%;
+}
+
+
+
+/*
+.pa__top-title {
+  margin-bottom: 20px;
+  color: #455582;
+  font: 14px "Gilroy-Extrabold", sans-serif;
+}
+.pa__middle-range {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-bottom: 50px;
+}
+.pa__middle-item {
+  margin-right: 10px;
+}
+.pa__top-sec input[type="date"] {
+  border: 0;
+  padding: 12px 20px;
+  color: #99a2ba;
+  font-size: 14px;
+}
+*/
+
+/* If you need to change calendar icon */
+/* .pa__top-sec input[type="date"]::-webkit-calendar-picker-indicator {
+  background-image: url("../img/calendar.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  width: 20px;
+  height: 20px;
+} */
+/*
+.btn-accent {
+  color: #fff;
+  background-color: #ff8007;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.btn {
+  font: 14px "Gilroy-Extrabold", sans-serif;
+  font-weight: 800;
+  text-align: center;
+  padding: 15px 30px;
+  border-radius: 5px;
+  text-decoration: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.pa__top-sec input[type="date"]:not(:valid):before {
+  content: attr(placeholder);
+  width: 100%;
+  font: 14px "Gilroy-Extrabold", sans-serif;
+}
+*/
+/*task_manager_*/
+.task_manager_table {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.task_manager_row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  /*height: calc(100% / 24);*/
+  height: 50px;
+}
+
+.task_manager_cell {
+  flex: 1;
+  border: none; /* remove the border from each cell */
+  box-sizing: border-box;
+  /*padding: 10px;*/
+  text-align: center;
+  color: #333;
+  user-select: auto; /* make cells selectable */
+}
+
+/*  */
+
+.task_manager_hour-cell {
+  width: 80px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  padding: 10px;
+  text-align: center;
+  color: #333;
+  user-select: none; /* make hour cells not selectable */
+}
+
+.task_manager_cell-group {
+  display: flex;
+  flex-direction: column;
+  flex: 4;
+  border: 1px solid #ccc; /* add a border to the group of cells */
+  box-sizing: border-box; /* make sure the border doesn't affect the size of the group */
+  margin-left: -1px; /* offset the left border by -1px to connect with the left border of the first cell */
+  user-select: none; /* make cell group not selectable */
+}
+
+.task_manager_cell-group .task_manager_cell:first-child {
+  border-top: none; /* remove the top border from the first cell in the group */
+}
+
+.task_manager_cell-group .task_manager_cell:last-child {
+  border-bottom: none; /* remove the bottom border from the last cell in the group */
+}
+
+
+
+
+.task_manager_date-group {
+  display: flex;
+  flex-direction: row;
+  flex: 4;
+  border: 1px solid #ccc; /* add a border to the group of cells */
+  box-sizing: border-box; /* make sure the border doesn't affect the size of the group */
+  margin-left: -1px; /* offset the left border by -1px to connect with the left border of the first cell */
+  user-select: none; /* make cell group not selectable */
+}
