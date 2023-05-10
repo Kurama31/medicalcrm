@@ -1,15 +1,23 @@
 import calendar
+import copy
 import datetime
+
 from pprint import pprint
 
 from django.contrib import auth
-from django.shortcuts import render, redirect
-from apps.task_manager.models import task_manager_work_days, task
-
-from .forms import task_manager_work_days_Form, task_Form
-import copy
-from apps.main.my_classes import my_date
 from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
+
+
+#from timedelta import TimedeltaField
+import timedelta
+
+from apps.main.my_classes import my_date
+from apps.task_manager.models import task_manager_work_days, task
+from .forms import task_manager_work_days_Form, task_Form
+
+now = datetime.datetime.now()
+
 
 
 def get_calendar(slected_period):
@@ -77,7 +85,7 @@ def select_color(current_month_list, user_id):
 
 
 def make_work_schedule(request):
-    now = datetime.datetime.now()
+    #now = datetime.datetime.now()
     get_auth = auth.get_user(request).username  # получить пользователя из реквеста
     get_user_id = auth.get_user(request).id
 
@@ -323,12 +331,8 @@ def iteration_hours():
 
     return hours_list
 
-def iteration_hours():
-    now = datetime.datetime.now()
-    days_list = []
-    days_begin = 8
-    days_end = 20
-    days_interval = now.year
+
+
 
 def make_data_from_2_str(input_list):
     single_date_str = input_list[0]['tmd_DATE'][0]
@@ -339,6 +343,20 @@ def make_data_from_2_str(input_list):
     # print(lock_up_date)
     return lock_up_date
 
+def days_shift():
+    two_days = datetime.timedelta(2)
+    date_begin = now - two_days
+    days_end = now + two_days
+
+    list_of_days = [x for x in range(date_begin.day, days_end.day + 1)]
+
+    delta = days_end - date_begin
+
+    list_of_datas = [date_begin + datetime.timedelta(i) for i in range(delta.days + 1)]
+    #print(list_of_datas)
+    return date_begin, days_end, list_of_days, list_of_datas
+
+#print("----------------------------------------",days_shift())
 
 # The real task manager
 # Отобразить все задачи пользователя
@@ -347,15 +365,15 @@ def task_manager_main(request):
     # user_last_name = auth.get_user(request).username
     get_user_id = auth.get_user(request).id
     # value="2018-06-12T19:30" для HTML
-    # Определяем дату создания таски
+    # Определяем дату создания задания
     now_raw = datetime.datetime.now()
     now = str(now_raw.date()) + 'T' + str(now_raw.time())[:5]
     # datetime.datetime.strptime(myDict['tmd_DATE'][0] + ' ' + myDict['tmd_TIME'][0],"%Y-%m-%d %H:%M")
     if request.method == 'POST':
         QueryDict = request.POST
         myDict = dict(QueryDict)
-        print("myDict: ", myDict)
-        print("date ", my_date.composite_date(myDict['tmd_DATE'][0], myDict['tmd_TIME'][0]))
+        #print("myDict: ", myDict)
+        #print("date ", my_date.composite_date(myDict['tmd_DATE'][0], myDict['tmd_TIME'][0]))
         batch = task(
             title=myDict['title'][0],
             description=myDict['description'][0],
@@ -372,14 +390,15 @@ def task_manager_main(request):
         return redirect('task_manager')
 
     error = "Вы совершили недопустимое действие. Ваш компьютер будет взорван, а вы расстреляны!"
-
-    tasks = task.objects.all().filter(user_id=get_user_id).order_by('due_date')
-
+    print("DATE BEGIN!!!!", days_shift()[0])
+    tasks = task.objects.filter(user_id=get_user_id).order_by('due_date')
+    #.all().filter(user_id=get_user_id, task_begin_date=days_shift()[0] )
     users = User.objects.all().values()
 
     users_list = [str(user['id']) + ' ' + user['username'] + ' ' + user['first_name'] + ' ' + user['last_name'] for user
                   in users]
-    print("users_list: ", users_list)
+
+    #print("users_list: ", users_list)
 
     data = {
         # 'form': form,
@@ -388,9 +407,12 @@ def task_manager_main(request):
         'now': now,
         'time_picker_list': time_select_list(),
         'users_list': users_list,
-        'hours_list': iteration_hours()
+        'hours_list': iteration_hours(),
+        'list_of_days': days_shift()[2],
+        'list_of_data': days_shift()
     }
-    pprint(data)
+    #pprint(data)
+    pprint(tasks)
     return render(request, 'task_manager/task_manager_main.html', data)
 
 

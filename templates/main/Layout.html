@@ -12,8 +12,6 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 
 
-
-
 </head>
 <body>
     <aside>
@@ -25,9 +23,7 @@
             <a href="/about_us"><li><i class="fab fa-artstation"></i> Про нас</li></a>
             <a href=""><li><i class="fab fa-battle-net"></i> Контакты</li></a>
             <a href="/news"><li><i class="fab fa-battle-net"></i> News</li></a>
-            <a href="/news/Auth"><li><i class="fab fa-battle-net"></i> Auth </li></a>
             <a href="/admin"><li><i class="fab fa-battle-net"></i> Admin</li></a>
-            {# href ссылка, li - элемент списка #}
             <a href="{% url 'create' %}"><li><i class="fa-thin fa-archway"></i> Добавление текста </li></a>
             <a href="{% url 'scheduler_today' %}"><li><i class="fa-light fa-avocado"></i> Календарь </li></a>
             <a href="{% url 'task_manager' %}"><li><i class="fa-light fa-avocado"></i>&#9719; Task Manager </li></a>
@@ -61,7 +57,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Внедрение в анал</h3>
+                <h3 class="modal-title">Вход</h3>
                 <a href="#close" title="Close" class="close">×</a>
             </div>
             <div class="modal-body">

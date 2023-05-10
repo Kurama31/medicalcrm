@@ -148,3 +148,40 @@ paintedCells.onmouseout = function(event) {
 
 {% endfor %}
 </div>
+
+==========================================================
+<div class="task_manager_table" id="paintedCells">
+
+    <div class="task_manager_row">
+<!--        <div class="task_manager_cell task_manager_hour-cell"></div>-->
+        <div class=" task_manager_hour-cell">Время</div>
+            <div class="task_manager_date-group"     >
+                <div class="task_manager_cell">01</div>
+                <div class="task_manager_cell">02</div>
+            </div>
+    </div>
+
+{% for el in hours_list %}
+  <div class="task_manager_row" >
+    <div class="task_manager_hour-cell">{{el}}</div>
+
+    <div class="task_manager_cell-group"     >
+      <div class="task_manager_cell" onclick="cellClicked('{{el}}', '00')"></div>
+      <div class="task_manager_cell" onclick="cellClicked('{{el}}', '15')"></div>
+      <div class="task_manager_cell" onclick="cellClicked('{{el}}', '30')"></div>
+      <div class="task_manager_cell" onclick="cellClicked('{{el}}', '45')"></div>
+    </div>
+
+    <div class="task_manager_cell-group"     >
+      <div class="task_manager_cell" onclick="cellClicked('{{el}}', '00')"></div>
+      <div class="task_manager_cell" onclick="cellClicked('{{el}}', '15')"></div>
+      <div class="task_manager_cell" onclick="cellClicked('{{el}}', '30')"></div>
+      <div class="task_manager_cell" onclick="cellClicked('{{el}}', '45')"></div>
+    </div>
+
+  </div>
+
+    <!-- repeat for all hours of the day -->
+
+{% endfor %}
+</div>

@@ -95,36 +95,32 @@
 =============================================================<br>
 <!--<a href="#make_task">-->
 
-
-
+list_of_days {{list_of_days}}
 <div class="task_manager_table" id="paintedCells">
 
     <div class="task_manager_row">
 <!--        <div class="task_manager_cell task_manager_hour-cell"></div>-->
-        <div class=" task_manager_hour-cell">Время</div>
+        <div class=" task_manager_hour-cell"></div>
             <div class="task_manager_date-group"     >
-                <div  class="task_manager_cell">01</div>
-                <div  class="task_manager_cell">02</div>
+                {% for day in list_of_days %}
+                    <div class="task_manager_date">{{day}}</div>
+                {% endfor %}
             </div>
     </div>
 
 {% for el in hours_list %}
   <div class="task_manager_row" >
+<!--  left Hours line    -->
     <div class="task_manager_hour-cell">{{el}}</div>
+    {% for day in list_of_days %}
+        <div class="task_manager_cell-group"     >
+          <div class="task_manager_cell" onclick="cellClicked('{{el}}', '00')"></div>
+          <div class="task_manager_cell" onclick="cellClicked('{{el}}', '15')"></div>
+          <div class="task_manager_cell" onclick="cellClicked('{{el}}', '30')"></div>
+          <div class="task_manager_cell" onclick="cellClicked('{{el}}', '45')"></div>
+        </div>
+    {% endfor %}
 
-    <div class="task_manager_cell-group"     >
-      <div class="task_manager_cell" onclick="cellClicked('{{el}}', '00')"></div>
-      <div class="task_manager_cell" onclick="cellClicked('{{el}}', '15')"></div>
-      <div class="task_manager_cell" onclick="cellClicked('{{el}}', '30')"></div>
-      <div class="task_manager_cell" onclick="cellClicked('{{el}}', '45')"></div>
-    </div>
-
-    <div class="task_manager_cell-group"     >
-      <div class="task_manager_cell" onclick="cellClicked('{{el}}', '00')"></div>
-      <div class="task_manager_cell" onclick="cellClicked('{{el}}', '15')"></div>
-      <div class="task_manager_cell" onclick="cellClicked('{{el}}', '30')"></div>
-      <div class="task_manager_cell" onclick="cellClicked('{{el}}', '45')"></div>
-    </div>
 
   </div>
 
@@ -136,18 +132,22 @@
 
 
 Сделать:
-вызов кнопки солздать задачу
-передать туда параметры
-тиражировать циклом
+1. Передать список дат с - по на каждый день по дате или формировать тут строкой. например взщять день и добавить к остальной дате
+Сделать выбра интервала времени через сессию<br>
+Передать данные из бд<br>\
+tasks: {% for task in tasks %}
+          {{task}}<br>
+        {% endfor %}
+ПОЧЕМУ ТАСКА БЕЗ ДАТЫ?
 <script>
 
 function cellClicked(row, col) {
   // Do something when cell is clicked, using the row and col arguments
   //console.log("Cell clicked: row=" + row + ", col=" + col);
   location.href='#make_task';
-  document.getElementById("tmd_DATE").value = "2023-03-14";
+  document.getElementById("tmd_DATE").value = "2023-03-14"; //"2023-03-14" add current data from arg
   document.getElementById("tmd_TIME").value = row + ":" + col;
-  //console.log(row + ":" + col);
+  console.log(row + ":" + col);
 
 }
 //paintedCells.onmouseover = function(event) {
@@ -191,16 +191,7 @@ paintedCells.onmouseout = function(event) {
 Записи в таблице Task manager<br>
 
 {% for el in tasks %}
-    New task:<br>
-    {{el.title}}<br>
-    {{el.description}}<br>
-    {{el.task_making_date}}<br>
-    {{el.task_begin_date}}<br>
-    {{el.due_date}}<br>
-    {{el.completed}}<br>
-    {{el.task_author}}<br>
-    {{el.task_executor}}<br>
-    {{el.user_id}}<br>
+
 {% endfor %}<br>
 
 

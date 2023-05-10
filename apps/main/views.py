@@ -2,14 +2,9 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from django.template import loader
 from django.shortcuts import render
+import mptt
 
-
-# def main(request: HttpResponse) -> JsonResponse:
-#    return JsonResponse(data={
-#        "error": False,
-#        "status": "Hello from Django",
-#        "details": None
-#    }, status=200)
+# https://www.youtube.com/watch?v=RKS81zzWWcM&t=1s
 
 def main(request: render) -> JsonResponse:
     data = {
