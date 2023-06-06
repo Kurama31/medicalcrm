@@ -8,10 +8,6 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
-
-#from timedelta import TimedeltaField
-import timedelta
-
 from apps.main.my_classes import my_date
 from apps.task_manager.models import task_manager_work_days, task
 from .forms import task_manager_work_days_Form, task_Form
@@ -19,9 +15,8 @@ from .forms import task_manager_work_days_Form, task_Form
 now = datetime.datetime.now()
 
 
-
-def get_calendar(slected_period):
-    today = datetime.datetime.today()
+def get_calendar(slected_period) -> str:
+    # slected_period be like "2023-05"
     selected_year = int(slected_period[:4])
     selected_month = int(slected_period[5:])
     current_month = calendar.monthcalendar(selected_year, selected_month)
@@ -61,6 +56,9 @@ def get_calendar(slected_period):
     return data_begin_calendar, data_min_lim, data_max_lim
 
 
+# def select_interval_of_days():
+
+
 def select_color(current_month_list, user_id):
     select_color_by_status_list = copy.deepcopy(current_month_list)
 
@@ -85,7 +83,7 @@ def select_color(current_month_list, user_id):
 
 
 def make_work_schedule(request):
-    #now = datetime.datetime.now()
+    # now = datetime.datetime.now()
     get_auth = auth.get_user(request).username  # получить пользователя из реквеста
     get_user_id = auth.get_user(request).id
 
@@ -111,8 +109,9 @@ def make_work_schedule(request):
 
     select_default_calendar_all = get_calendar(slected_period)
     select_default_calendar = select_default_calendar_all[0]
-    new_month_list = []
-    print("====================================== 7")
+    # new_month_list = []
+    # print("====================================== form", form)
+    # print("-------------------------------------- time 1", get_user_id, selected_year, selected_month)
     for single_week in select_default_calendar:
         for i, single_day in enumerate(single_week):
             if single_day == '0':
@@ -135,6 +134,7 @@ def make_work_schedule(request):
 
     # ============== select_default_items (NEW month) ==============
 
+    # =============== Повторная запись в БД или АПДЛЕЙТ =======================
     if form.exists():
         # print("There is at least one object in form")
         request_status = "Запись у этого юзера за этот месяц уже есть"
@@ -161,7 +161,7 @@ def make_work_schedule(request):
 
         # current_month_list Для отображения данных из БД если они есть
         current_month_list = new_month_list
-        print("we take this current_month_list (from DB )")
+        # print("we take this current_month_list (from DB )")
 
         # ============== Для записи в БД =====================================
 
@@ -170,6 +170,7 @@ def make_work_schedule(request):
 
             # Проверить и может быть убрать is_valid()
             if form_recording.is_valid():
+
                 QueryDict = request.POST
                 myDict = dict(QueryDict)
                 Query_list = []
@@ -209,6 +210,7 @@ def make_work_schedule(request):
 
             # user_id = user_id в исходниках для начальный данных
             for updated_data in form:
+                # 15.05.2023 issues: WHAT is that:?
                 updated_data.status = updated_data.status
 
                 for batch_data in batch:
@@ -227,19 +229,23 @@ def make_work_schedule(request):
 
             task_manager_work_days.objects.bulk_update(user_bulk_update_list,
                                                        ['date_begin', 'date_end', 'user_id', 'status'])
-
+            print("========updated_data===========", updated_data)
             # ============== END UPDATE записей В БД ==============
             return redirect(request.build_absolute_uri())
 
     else:
         # print("There is no one object in form, so we START: ")
         request_status = "У этого юзера за этот месяц НЕТ записей. вообще!"
-        submit_button = "Я пердолил!!"
+        submit_button = "Отправить "  # Я пердолил!!
 
-        # ============== ЗАПИСЬ В БД ==============
+        # ============== Первая ЗАПИСЬ В БД ==============
+        print("========UPLOAD data 01.05. issues 00===========")
+        print("request.method: ", request.method)
         if request.method == 'POST':
             form_recording = task_manager_work_days_Form(request.POST)
+
             if form_recording.is_valid():
+                print("========UPLOAD data 01.05. issues 01===========")
                 QueryDict = request.POST
                 myDict = dict(QueryDict)
                 Query_list = []
@@ -293,7 +299,7 @@ def make_work_schedule(request):
         'calendar': get_calendar(slected_period),
         'current_month_list': current_month_list,
         'submit_button': submit_button,
-        'select_color': select_color_by_status_list,
+        'select_color': select_color_by_status_list
     }
 
     return render(request, 'task_manager/make_work_schedule.html', data)
@@ -322,7 +328,7 @@ def time_select_list():
 
 def iteration_hours():
     hours_list = []
-    #hours = -1
+    # hours = -1
     hours_begin = 8
     hours_end = 20
     while hours_begin != hours_end:
@@ -330,8 +336,6 @@ def iteration_hours():
         hours_list.append(f'{hours_begin:02}')
 
     return hours_list
-
-
 
 
 def make_data_from_2_str(input_list):
@@ -343,20 +347,38 @@ def make_data_from_2_str(input_list):
     # print(lock_up_date)
     return lock_up_date
 
-def days_shift():
-    two_days = datetime.timedelta(2)
-    date_begin = now - two_days
-    days_end = now + two_days
 
-    list_of_days = [x for x in range(date_begin.day, days_end.day + 1)]
+def days_shift(selector_of_days_interval):
+    # Только ФИКСИРОВАННЕ периоды может будет лучше?
+    # list_of_days = []
+    if selector_of_days_interval == 5:
+        two_days = datetime.timedelta(2)
+        date_begin = now - two_days
+        days_end = now + two_days
+        warp = 1
+    elif selector_of_days_interval == 10:
+        days = datetime.timedelta(5)
+        date_begin = now - days
+        days_end = now + days
+        warp = 0
+    else:
+        two_days = datetime.timedelta(2)
+        date_begin = now - two_days
+        days_end = now + two_days
+        warp = 1
+
+
 
     delta = days_end - date_begin
 
-    list_of_datas = [date_begin + datetime.timedelta(i) for i in range(delta.days + 1)]
-    #print(list_of_datas)
-    return date_begin, days_end, list_of_days, list_of_datas
+    #list_of_days = [(date_begin + datetime.timedelta(i)).strftime("%d") for i in range(delta.days + warp)]
+    list_of_dates = [(date_begin + datetime.timedelta(i)).strftime("%Y-%m-%d") for i in range(delta.days + warp)]
+    list_of_days = [x[8:] for x in list_of_dates]
 
-#print("----------------------------------------",days_shift())
+    return date_begin, days_end, list_of_days, list_of_dates
+
+
+# print("----------------------------------------",days_shift()[3])
 
 # The real task manager
 # Отобразить все задачи пользователя
@@ -365,54 +387,95 @@ def task_manager_main(request):
     # user_last_name = auth.get_user(request).username
     get_user_id = auth.get_user(request).id
     # value="2018-06-12T19:30" для HTML
+
+    # ============== Select month ==============
+
+    user_selected_month = dict(request.GET)
+    print("user_selected_month: ", user_selected_month)
+
+    #print("user_selected_month: ", type(int(user_selected_month['amount_of_days'][0])), user_selected_month['amount_of_days'][0])
+    if user_selected_month:
+        selected_year = user_selected_month['selected_month'][0][:4]
+        selected_month = user_selected_month['selected_month'][0][5:]
+        slected_period = user_selected_month['selected_month'][0]
+
+        number_of_days = int(user_selected_month['amount_of_days'][0])
+    else:
+        selected_year = now.year
+        selected_month = now.month
+        slected_period = str(selected_year) + '-' + str(f'{selected_month:02}')
+
+        number_of_days = 5
+    # Переписать на ДЕКОРАТОР!
+    # /============== END Select month ==============
+
+    form = task.objects.all().filter(user_id=get_user_id,
+                                     task_begin_date__year=selected_year,
+                                     task_begin_date__month=selected_month).order_by('deadline')
+    pprint(form)
+    # print("data from form: ", form[0])
+    """
+    for x in form:
+        print("queryset_data: ", x.task_begin_date.day)
+
+    list_of_days = [x.task_begin_date.day for x in form]
+    print("list_of_days ", list_of_days)
+    """
+    # tasks = task.objects.filter(user_id=get_user_id).order_by('deadline')
+    # .all().filter(user_id=get_user_id, task_begin_date=days_shift()[0] )
+
     # Определяем дату создания задания
     now_raw = datetime.datetime.now()
-    now = str(now_raw.date()) + 'T' + str(now_raw.time())[:5]
+    # now = str(now_raw.date()) + 'T' + str(now_raw.time())[:5]
     # datetime.datetime.strptime(myDict['tmd_DATE'][0] + ' ' + myDict['tmd_TIME'][0],"%Y-%m-%d %H:%M")
     if request.method == 'POST':
         QueryDict = request.POST
         myDict = dict(QueryDict)
-        #print("myDict: ", myDict)
-        #print("date ", my_date.composite_date(myDict['tmd_DATE'][0], myDict['tmd_TIME'][0]))
-        batch = task(
+        print("myDict: ", myDict)
+        print("deadline ", my_date.date_to_db(myDict['deadline'][0]))
+        batch1 = task(
             title=myDict['title'][0],
             description=myDict['description'][0],
             task_making_date=str(now_raw.date()) + 'T' + str(now_raw.time())[:5],
             task_begin_date=my_date.composite_date(myDict['tmd_DATE'][0], myDict['tmd_TIME'][0]),
-            due_date=my_date.date_to_db(myDict['due_date'][0]),
+            deadline=my_date.date_to_db(myDict['deadline'][0]),
             completed=myDict['completed'][0],
             task_author=get_auth,
             task_executor=myDict['task_executor'][0],
             user_id=get_user_id
         )
 
-        task.save(batch)
+        task.save(batch1)
         return redirect('task_manager')
 
     error = "Вы совершили недопустимое действие. Ваш компьютер будет взорван, а вы расстреляны!"
-    print("DATE BEGIN!!!!", days_shift()[0])
-    tasks = task.objects.filter(user_id=get_user_id).order_by('due_date')
-    #.all().filter(user_id=get_user_id, task_begin_date=days_shift()[0] )
+    # print("DATE BEGIN!!!!", days_shift()[0])
+
     users = User.objects.all().values()
 
     users_list = [str(user['id']) + ' ' + user['username'] + ' ' + user['first_name'] + ' ' + user['last_name'] for user
                   in users]
 
-    #print("users_list: ", users_list)
+    # ======= select interval of days ======
+    # composite_date = my_date.composite_date
+
+    #
+    print("select_interval_of_days: ", now.strftime("%Y-%m-%d"))  # T%H:%M
 
     data = {
-        # 'form': form,
-        'tasks': tasks,
+        'form': form,
+        'tasks': form,  # FOR TEST
         'username': get_auth,
-        'now': now,
+        'slected_period': slected_period,
         'time_picker_list': time_select_list(),
         'users_list': users_list,
         'hours_list': iteration_hours(),
-        'list_of_days': days_shift()[2],
-        'list_of_data': days_shift()
+        'list_of_days': days_shift(number_of_days)[2],
+        'list_of_dates': days_shift(number_of_days)[3],
+        'list_of_data': get_calendar(slected_period)
     }
-    #pprint(data)
-    pprint(tasks)
+    # pprint(data)
+    # pprint(form)
     return render(request, 'task_manager/task_manager_main.html', data)
 
 

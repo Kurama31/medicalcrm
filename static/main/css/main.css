@@ -762,16 +762,17 @@ input[type="date"] {
   user-select: auto; /* make cells selectable */
 }
 
-/*  */
+
 
 .task_manager_hour-cell {
   width: 80px;
-  background-color: #f0f0f0;
+  /*background-color: #f0f0f0;
   border: 1px solid #ccc;
+  */
   box-sizing: border-box;
   padding: 10px;
-  text-align: center;
-  color: #333;
+  text-align: right;
+  /*color: #333;*/
   user-select: none; /* make hour cells not selectable */
 }
 
@@ -795,7 +796,7 @@ input[type="date"] {
 
 
 
-
+/* Head_of_date */
 .task_manager_date-group {
   display: flex;
   flex-direction: row;
@@ -804,4 +805,15 @@ input[type="date"] {
   box-sizing: border-box; /* make sure the border doesn't affect the size of the group */
   margin-left: -1px; /* offset the left border by -1px to connect with the left border of the first cell */
   user-select: none; /* make cell group not selectable */
+}
+
+
+.task_manager_date {
+  flex: 1;
+  border: none; /* remove the border from each cell */
+  box-sizing: border-box;
+  padding: 15px;
+  text-align: center;
+  color: white;
+  user-select: auto; /* make cells selectable */
 }

@@ -28,4 +28,4 @@ class task_Form(ModelForm):
         model = task
         # поля, которые будут внутри формы ПОЛЬЗОВАТЕЛЮ
         fields = ['title', 'description', 'task_making_date', 'task_begin_date',
-                  'due_date', 'completed', 'task_author', 'task_executor', 'user_id']
+                  'deadline', 'completed', 'task_author', 'task_executor', 'user_id']

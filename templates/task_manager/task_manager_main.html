@@ -11,8 +11,8 @@
 
 
     <div id="make_task" class="modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
+        <div class="modal-dialog" id="modal-dialog">
+            <div class="modal-content" id="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title">test</h3>
                     <a href="#close" title="Close" class="close">×</a>
@@ -28,9 +28,10 @@
 
                         <div>
 <!--                            <input type="date" name="task_making_date_DATE"  value="2023-03-14">-->
-                            <input type="date" name="tmd_DATE" id="tmd_DATE" class="input-txt" placeholder="Дата">
+                            <input type="date" name="tmd_DATE" id="tmd_DATE" value="" class="input-txt" placeholder="Дата">
 
-                            <input type="text" name="tmd_TIME" id="tmd_TIME" value="" list="time" autocomplete="on" placeholder="time"><br>
+                            <input type="text" name="tmd_TIME" id="tmd_TIME" value="" list="time" placeholder="time"><br>
+<!--                            autocomplete="on" -->
                             <datalist id="time">
                                 {% for el in time_picker_list %}
                                     <option value={{el}}></option>
@@ -39,9 +40,8 @@
                         </div>
 
 <!--                        <input type="date" name="task_begin_date"><br>-->
-
                         Срок выполнения:<br>
-                        <input type="datetime-local" name="due_date" ><br>
+                        <input type="datetime-local" name="deadline" ><br>
 
 <li id="completed_btn"     class="row" style="display:block; background:blue" onclick="first('completed_btn', 'not_completed_btn', 'status')">Активна</li>
 <li id="not_completed_btn" class="row" style="display:none; background:green " onclick="second('completed_btn', 'not_completed_btn', 'status' )">Пассивна (Завершена)</li>
@@ -49,9 +49,7 @@
                         <!--status 0 - активна.    status 1 - завершена                     -->
                         <br>
 
-
-
-                        <input type="text" name="task_executor" value="" list="task_executor" onclick="test()" autocomplete="on" placeholder="Исполнитель задачи"><br>
+                        <input type="text" name="task_executor" value="" list="task_executor" autocomplete="on" placeholder="Исполнитель задачи"><br>
                             <datalist id="task_executor">
                                 {% for el in users_list %}
                                     <option value={{el}}>{{el}}</option>
@@ -66,23 +64,17 @@
     </div>
 <!--==================================================-->
 
-
-
-
-
 <script>
-    function test(){
-        console.log('test');
-    }
+    //function test(){
+    //    console.log('test');
+    //}
 
     function first(key1, key2, key3) {
         //document.getElementById(key3).setAttribute("style", "opacity:1; transition: 1s;");
         document.getElementById(key1).setAttribute("style", "display: none");
         document.getElementById(key2).setAttribute("style", "display: block; background: green;");
         document.getElementById(key3).value = '1';
-        console.log('first');
-        //console.log(key2);
-        //console.log(key3);
+        //console.log('first');
     }
     function second(key1, key2, key3) {
         //document.getElementById(key3).setAttribute("style", "display: none");
@@ -91,19 +83,48 @@
         document.getElementById(key3).value = '0';
         //console.log('second');
     }
-</script>
-=============================================================<br>
-<!--<a href="#make_task">-->
 
-list_of_days {{list_of_days}}
+// =============== make_task close =====================
+const div = document.querySelector( '#modal-dialog');
+document.addEventListener( 'click', (e) => {
+        const select_area = e.composedPath().includes(div);
+        //console.log('includes(make_task): ', e.composedPath().includes(make_task));
+
+        if ( e.composedPath().includes(make_task) && ! select_area) {
+            //console.log('select_area1: ', select_area);
+            window.location.href = '#close';
+        }
+})
+
+
+</script>
+
+<form method="get" >
+    <input name="selected_month" type="month" value={{slected_period}}><br>
+    количество дней: <input name="amount_of_days" type="day" value=5><br>
+    <button class="btn btn-success" type="submit"> запись</button>
+
+</form>
+=============================================================<br>
+
+Передать данные из бд (готово) <br>
+Выбирать данные между что б был выбранный интервал (!) <br>
+Отображать 5 дней или более<br>
+tasks: {% for task in form %}
+          {{task}}<br>
+        {% endfor %}
+slected_period {{slected_period}} <br>
+list_of_days  {{list_of_days}}<br>
+<!-- |slice:"11:" -->
+
 <div class="task_manager_table" id="paintedCells">
 
     <div class="task_manager_row">
-<!--        <div class="task_manager_cell task_manager_hour-cell"></div>-->
+
         <div class=" task_manager_hour-cell"></div>
             <div class="task_manager_date-group"     >
-                {% for day in list_of_days %}
-                    <div class="task_manager_date">{{day}}</div>
+                {% for day in list_of_dates %}
+                    <div class="task_manager_date">{{day|slice:"8:"}}</div>
                 {% endfor %}
             </div>
     </div>
@@ -112,12 +133,12 @@ list_of_days {{list_of_days}}
   <div class="task_manager_row" >
 <!--  left Hours line    -->
     <div class="task_manager_hour-cell">{{el}}</div>
-    {% for day in list_of_days %}
+    {% for date in list_of_dates %}
         <div class="task_manager_cell-group"     >
-          <div class="task_manager_cell" onclick="cellClicked('{{el}}', '00')"></div>
-          <div class="task_manager_cell" onclick="cellClicked('{{el}}', '15')"></div>
-          <div class="task_manager_cell" onclick="cellClicked('{{el}}', '30')"></div>
-          <div class="task_manager_cell" onclick="cellClicked('{{el}}', '45')"></div>
+          <div class="task_manager_cell" onclick="cellClicked('{{el}}', '00', '{{date}}')">{{date}}</div>
+          <div class="task_manager_cell" onclick="cellClicked('{{el}}', '15', '{{date}}')"></div>
+          <div class="task_manager_cell" onclick="cellClicked('{{el}}', '30', '{{date}}')"></div>
+          <div class="task_manager_cell" onclick="cellClicked('{{el}}', '45', '{{date}}')"></div>
         </div>
     {% endfor %}
 
@@ -129,27 +150,29 @@ list_of_days {{list_of_days}}
 {% endfor %}
 </div>
 
+list_of_dates: {{list_of_dates}}
+{% for day in list_of_dates %}
+DAY: {{day|slice:"8:"}}<br>
 
+{% endfor %}<br>
 
-Сделать:
+Сделать:<br>
 1. Передать список дат с - по на каждый день по дате или формировать тут строкой. например взщять день и добавить к остальной дате
 Сделать выбра интервала времени через сессию<br>
-Передать данные из бд<br>\
-tasks: {% for task in tasks %}
-          {{task}}<br>
-        {% endfor %}
-ПОЧЕМУ ТАСКА БЕЗ ДАТЫ?
+2. Очищать окноа ввода после закрытия
+
 <script>
 
-function cellClicked(row, col) {
+function cellClicked(row, col, date) {
+
   // Do something when cell is clicked, using the row and col arguments
   //console.log("Cell clicked: row=" + row + ", col=" + col);
   location.href='#make_task';
-  document.getElementById("tmd_DATE").value = "2023-03-14"; //"2023-03-14" add current data from arg
+  document.getElementById("tmd_DATE").value = date; //"2023-03-14"
   document.getElementById("tmd_TIME").value = row + ":" + col;
-  console.log(row + ":" + col);
-
+  console.log(row + ":" + col, date);
 }
+
 //paintedCells.onmouseover = function(event) {
 
 //document.getElementsByClassName("task_manager_cell")
@@ -159,7 +182,7 @@ paintedCells.onmouseover = function(event) {
   //target.style.background = 'pink';
 
   if (target.className=="task_manager_cell") {
-    console.log("test test test");
+    //console.log("test test test");
     target.style.background = 'rgb(26,115,232)';
     }
   //text.value += "mouseover " + target.tagName + "\n";
@@ -173,7 +196,10 @@ paintedCells.onmouseout = function(event) {
   //text.scrollTop = text.scrollHeight;
 };
 
-
+paintedCells.onclick = function(event) {
+    console.log("paintedCells.onmousedown");
+    document.getElementById('make_task').setAttribute("style", "display: block");
+};
 
 
 </script>

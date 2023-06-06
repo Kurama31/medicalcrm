@@ -23,11 +23,14 @@ class task(models.Model):
     description = models.TextField('description', null=True, blank=True)
     task_making_date = models.DateTimeField('task_making_date', null=True, blank=True)
     task_begin_date = models.DateTimeField('task_begin_date', null=True, blank=True)
-    due_date = models.DateTimeField('due_date', null=True, blank=True)
+
+    deadline = models.DateTimeField('deadline', null=True, blank=True)
     completed = models.CharField('completed', null=True, blank=True, max_length=1)
     task_author = models.CharField('task_author', null=True, blank=True, max_length=200)
     task_executor = models.CharField('task_executor', null=True, blank=True, max_length=200)
     user_id = models.IntegerField('user_id')
+
+
 
     def __str__(self):
         return self.title

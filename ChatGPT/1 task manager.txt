@@ -1,0 +1,87 @@
+Create a Django project:
+Open your terminal and run the following command to create a Django project:
+
+django-admin startproject taskmanager
+
+Create a Django app:
+Change into the project directory and run the following command to create a Django app:
+
+python manage.py startapp tasks
+
+Define models:
+Open the models.py file in the tasks app and define the models for your task manager. For example:
+
+python
+
+from django.db import models
+
+class Task(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    due_date = models.DateField()
+    completed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.title
+
+Run migrations:
+Run the following commands to apply the model changes to the database:
+
+python manage.py makemigrations
+python manage.py migrate
+
+Create views:
+Open the views.py file in the tasks app and create views to handle the display and processing of task data. For example:
+
+python
+
+from django.shortcuts import render, redirect
+from .models import Task
+
+def index(request):
+    tasks = Task.objects.all()
+    return render(request, 'tasks/index.html', {'tasks': tasks})
+
+def add_task(request):
+    if request.method == 'POST':
+        title = request.POST['title']
+        description = request.POST['description']
+        due_date = request.POST['due_date']
+        Task.objects.create(title=title, description=description, due_date=due_date)
+        return redirect('index')
+
+    return render(request, 'tasks/add.html')
+
+def complete_task(request, task_id):
+    task = Task.objects.get(id=task_id)
+    task.completed = True
+    task.save()
+    return redirect('index')
+
+Create URL patterns:
+Open the urls.py file in the tasks app and create URL patterns to map to the views. For example:
+
+python
+
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.index, name='index'),
+    path('add/', views.add_task, name='add'),
+    path('complete/<int:task_id>/', views.complete_task, name='complete'),
+]
+
+Create templates:
+Create a templates directory in the tasks app and add templates to control the look and feel of your task manager. For example:
+
+tasks/templates/tasks/index.html:
+
+css
+
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Tasks</h1>
+<ul>
+   

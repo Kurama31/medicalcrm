@@ -24,17 +24,17 @@
                 {% if calendar.0.0.0|slice:"-8:10" == "0" %}
                     <li class="row"></li>
                 {% else %}
-                    <li id="f00" class="row" style="background: {{select_color.0.0}}" onclick="first('f00', 's00', 'd00', 'v00')">{{calendar.0.0.0|slice:"-8:10"}}</li>
+                    <li id="f00" class="row" style="background: {{select_color.0.0}}" onclick="first('f00', 's00', 'd00', 'v00')">{{calendar.0.0.0|slice:"-8:10"}}<br>{{current_month_list.0.0.date_begin|slice:"11:"}} - {{current_month_list.0.0.date_end|slice:"11:"}} </li>
                 {% endif %}
                 <li id="s00"; class="hide_the_time" style="display:none" onclick="first_yelloy('f00', 's00', 'd00', 'v00')">{{calendar.0.0.0|slice:"-8:10"}}</li>
                 <div id="d00" style="display:none">
                     <input type="datetime-local" name="date_begin" value={{current_month_list.0.0.date_begin}}
-                           min={{calendar.1.0.0}} max={{calendar.1.0.0}}
+                           min={{calendar.1.0.0}} max={{calendar.2.0.0}}
                            style="height: 1rem; width: 140px; font-size: 1em;"><br>
 
 
                     <input type="datetime-local" name="date_end" value={{current_month_list.0.0.date_end}}
-                           min={{calendar.2.0.0}} max={{calendar.2.0.0}}
+                           min={{calendar.1.0.0}} max={{calendar.2.0.0}}
                            style="height: 1rem; width: 140px; font-size: 1em;">
                     <input type="hidden" id="v00"  name="status" value={{current_month_list.0.0.status}}>
                     <input type="hidden" name="user_id" value={{get_user_id}}>
@@ -875,7 +875,7 @@
         document.getElementById(key1).setAttribute("style", "display: none");
         document.getElementById(key2).setAttribute("style", "display: block");
         document.getElementById(key4).value = '1';
-        //console.log(key1);
+        //console.log("first");
         //console.log(key2);
         //console.log(key3);
     }
@@ -884,6 +884,7 @@
         document.getElementById(key2).setAttribute("style", "display: none");
         document.getElementById(key1).setAttribute("style", "display: block; background: blue;");
         document.getElementById(key4).value = '0';
+        console.log(document.getElementById(key3));
     }
 
 </script>
